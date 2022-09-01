@@ -1,0 +1,23 @@
+{% comment %} {% load render_bundle from webpack_loader %} {% endcomment %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+ <head>
+ <meta charset="UTF-8">
+ <link rel="stylesheet" type="text/css" href="{% static 'global.css' %}" />
+ <link rel="stylesheet" type="text/css" href="{% static 'build/bundle.css' %}" />
+ <title>Questions</title>
+ </head>
+<body>
+  <h1>question page</h1>
+ {% comment %} <div id="react"></div>
+  <script>
+    window.props = {{ props|safe }};
+    window.react_mount = document.getElementById('react');
+  </script>
+
+  {% render_bundle 'principal' 'js' %} {% endcomment %}
+  <script type="module" defer src="{% static 'build/main.js' %}"></script>
+
+ </body>
+</html>
