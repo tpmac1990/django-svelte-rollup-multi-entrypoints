@@ -2,7 +2,7 @@
 node_modules/
 __pycache__/
 bundles/
-/public/build/
+mysite/svelte/public/build/
 .DS_Store
 venv/
 db.sqlite3

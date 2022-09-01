@@ -1,10 +1,17 @@
 <script>
-	export let name;
+	export let questions;
+	export let other;
 </script>
 
 <main>
-	<h1>Bye Ma Car {name}!</h1>
-	<p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
+	<h1>Bye Ma Car World!</h1>
+	<p>find a list below:</p>
+	<p>{other}</p>
+	<ul>
+		{#each questions as prop}
+			<li>{prop.question_text}</li>
+		{/each}
+	</ul>
 </main>
 
 <style>
