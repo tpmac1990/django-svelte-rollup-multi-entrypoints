@@ -1,7 +1,11 @@
 <script>
 	export let questions;
 	export let other;
+
+	import Tailwindcss from './Tailwind.svelte';
 </script>
+
+<Tailwindcss />
 
 <main>
 	<h1>Bye Ma Car World!</h1>
@@ -12,6 +16,11 @@
 			<li>{prop.question_text}</li>
 		{/each}
 	</ul>
+	<div class="text-2xl font-bold underline">
+		<span>hello</span>
+		<span>tailwind</span>
+		<span>css</span>
+	</div>
 </main>
 
 <style>

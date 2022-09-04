@@ -5,6 +5,7 @@ import livereload from 'rollup-plugin-livereload';
 import { terser } from 'rollup-plugin-terser';
 import css from 'rollup-plugin-css-only';
 import del from 'rollup-plugin-delete'
+import sveltePreprocess from 'svelte-preprocess';
 var path = require("path");
 
 const production = !process.env.ROLLUP_WATCH;
@@ -50,7 +51,14 @@ export default {
 			compilerOptions: {
 				// enable run-time checks when not in production
 				dev: !production
-			}
+			},
+			// This tells svelte to run some preprocessing
+			preprocess: sveltePreprocess({
+				postcss: true,  // And tells it to specifically run postcss!
+				// defaults: {
+				// 	style: 'postcss',
+				// },
+			}),
 		}),
 		// we'll extract any component CSS out into
 		// a separate file - better for performance
