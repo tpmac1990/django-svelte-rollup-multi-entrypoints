@@ -1,16 +1,28 @@
 <script>
-	// non-dynamic import of nested component
-	// import Nested from './Nested.svelte';
-	export let name;
+
+	let name = 'world'
+	export let questions;
+	export let question_text;
+
+	import GlobalStyles from '../../common/src/GlobalStyles.svelte';
 </script>
 
+<GlobalStyles />
+
 <main>
-	<h1>Hello Ma DA {name}!</h1>
+	<h1 class=''>Hello Ma DA {name}!</h1>
 	<p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
-	<!-- <Nested/> -->
+
+	<!-- lazy loading -->
 	{#await import("./Nested.svelte") then Module}
-		<Module.default />
+		<Module.default question_text={question_text} />
 	{/await}
+
+	<ul>
+		{#each questions as prop}
+			<li>{prop.question_text}</li>
+		{/each}
+	</ul>
 </main>
 
 <style>

@@ -2,10 +2,10 @@
 	export let questions;
 	export let other;
 
-	import Tailwindcss from './Tailwind.svelte';
+	import GlobalStyles from '../../common/src/GlobalStyles.svelte';
 </script>
 
-<Tailwindcss />
+<GlobalStyles />
 
 <main>
 	<h1>Bye Ma Car World!</h1>

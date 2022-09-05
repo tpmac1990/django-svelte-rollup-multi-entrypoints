@@ -35,7 +35,7 @@ function serve() {
 export default {
 	input: {
         main: path.resolve(__dirname, 'mysite/polls/src/main.js'),
-        other: path.resolve(__dirname, 'mysite/polls/src/other.js')
+        other: path.resolve(__dirname, 'mysite/other/src/other.js')
     },
     output: {
         sourcemap: false,
