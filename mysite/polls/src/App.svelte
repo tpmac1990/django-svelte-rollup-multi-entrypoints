@@ -5,6 +5,25 @@
 	export let question_text;
 
 	import GlobalStyles from '../../common/src/GlobalStyles.svelte';
+
+	import { count } from '../../svelte/store/stores.js';
+	import { other_count } from '../../svelte/store/counter.js';
+
+	let countValue;
+
+	count.subscribe(value => {
+		countValue = value;
+	});
+
+	function increment() {
+		count.update(n => n + 1);
+	}
+	function decrement() {
+		count.update(n => n - 1);
+	}
+	function reset() {
+		count.set(0);
+	}
 </script>
 
 <GlobalStyles />
@@ -23,6 +42,19 @@
 			<li>{prop.question_text}</li>
 		{/each}
 	</ul>
+
+	<div class='my-5'>
+		<h2 class='text-2xl'>The count is {countValue}</h2>
+		<button on:click={increment}>+</button>
+		<button on:click={decrement}>-</button>
+		<button on:click={reset}>reset</button>
+		<br/>
+	</div>
+
+	<h2>The count is {$other_count}</h2>
+	<button on:click={other_count.increment}>+</button>
+	<button on:click={other_count.decrement}>-</button>
+	<button on:click={other_count.reset}>reset</button>
 </main>
 
 <style>
