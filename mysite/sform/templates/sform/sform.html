@@ -1,0 +1,19 @@
+{% load static load_bundle %}
+<!DOCTYPE html>
+<html>
+ <head>
+ <meta charset="UTF-8">
+
+ {% comment %} <link rel="stylesheet" type="text/css" href="{% static 'build/bundle.css' %}" /> {% endcomment %}
+ 
+ <title>Sform</title>
+ </head>
+<body>
+
+  <script>window.props = {{ props|safe }};</script>
+
+  {% comment %} <script type="module" defer src="{% static 'build/sform.js' %}"></script> {% endcomment %}
+  <script type="module" defer src="{% load_bundle 'build/sform.js' %}"></script>
+
+ </body>
+</html>
