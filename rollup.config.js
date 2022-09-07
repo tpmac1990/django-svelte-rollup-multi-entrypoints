@@ -3,9 +3,11 @@ import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
 import livereload from 'rollup-plugin-livereload';
 import { terser } from 'rollup-plugin-terser';
-import css from 'rollup-plugin-css-only';
+// import css from 'rollup-plugin-css-only';
+import styles from "rollup-plugin-styles";
 import del from 'rollup-plugin-delete'
 import sveltePreprocess from 'svelte-preprocess';
+import outputManifest from 'rollup-plugin-output-manifest';
 var path = require("path");
 
 const production = !process.env.ROLLUP_WATCH;
@@ -35,18 +37,21 @@ function serve() {
 export default {
 	input: {
         main: path.resolve(__dirname, 'mysite/polls/src/main.js'),
-        other: path.resolve(__dirname, 'mysite/other/src/other.js')
+        other: path.resolve(__dirname, 'mysite/other/src/other.js'),
+		sform: path.resolve(__dirname, 'mysite/sform/src/sform.js')
     },
     output: {
         sourcemap: false,
         format: 'esm',
         dir: path.resolve(public_dir, 'build/'),
-		entryFileNames: '[name].js',
-		// using '[name].[hash].js' in development breaks hot-reload
-        chunkFileNames: `[name]${production && '-[hash]' || ''}.js`
+		entryFileNames: '[name].[hash].js',
+		// // using '[name].[hash].js' in development breaks hot-reload
+        chunkFileNames: `[name]${production && '-[hash]' || ''}.js`,
+		// chunkFileNames: `[name]-[hash].js`,
+		// assetFileNames: "[name]-[hash][extname]",
     },
 	plugins: [
-		del({ targets: path.resolve(public_dir, 'build/*.*.js') }), // only delete chunk files, other files will be over written
+		del({ targets: path.resolve(public_dir, 'build/*{.,-}*.js') }), // only delete chunk files, other files will be over written
 		svelte({
 			compilerOptions: {
 				// enable run-time checks when not in production
@@ -60,9 +65,12 @@ export default {
 				// },
 			}),
 		}),
+		// create a manifest file to match file names with their hash equivalents
+		outputManifest({fileName: path.resolve('mysite', 'manifest.json')}),
 		// we'll extract any component CSS out into
 		// a separate file - better for performance
-		css({ output: 'bundle.css' }),
+		// css({ output: `bundle.css` }),
+		styles(),
 
 		// If you have external dependencies installed from
 		// npm, you'll most likely need these plugins. In

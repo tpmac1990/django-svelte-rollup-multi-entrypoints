@@ -55,3 +55,11 @@ Found this explanation:
 >I understand that a 'broken pipe' error occurs when the browser sends a request but does not wait for the response and closes the connection.
 It does not seem to create any problems.
 
+
+
+
+### packages
+https://www.npmjs.com/package/rollup-plugin-output-manifest
+https://www.npmjs.com/package/rollup-plugin-styles using this one at the moment as it doesn't build a bundle.css file.
+https://www.npmjs.com/package/rollup-plugin-css-only.
+Not sure of a way to create a hash for the css file and add it to the manifest file to prevent caching

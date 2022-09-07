@@ -1,10 +1,10 @@
-{% load static %}
+{% load static load_bundle %}
 <!DOCTYPE html>
 <html>
  <head>
  <meta charset="UTF-8">
 
- <link rel="stylesheet" type="text/css" href="{% static 'build/bundle.css' %}" />
+ {% comment %} <link rel="stylesheet" type="text/css" href="{% static 'build/bundle.css' %}" /> {% endcomment %}
  
  <title>Other</title>
  </head>
@@ -12,7 +12,7 @@
 
   <script>window.props = {{ props|safe }};</script>
 
-  <script type="module" defer src="{% static 'build/other.js' %}"></script>
+  <script type="module" defer src="{% load_bundle 'build/other.js' %}"></script>
 
  </body>
 </html>

@@ -1,17 +1,17 @@
-{% load static %}
+{% load static load_bundle %}
 <!DOCTYPE html>
 <html>
  <head>
  <meta charset="UTF-8">
 
- <link rel="stylesheet" type="text/css" href="{% static 'build/bundle.css' %}" />
+ {% comment %} <link rel="stylesheet" type="text/css" href="{% static 'build/bundle.css' %}" /> {% endcomment %}
  
  <title>Questions</title>
  </head>
 <body>
   <script>window.props = {{ props|safe }};</script>
 
-  <script type="module" defer src="{% static 'build/main.js' %}"></script>
+  <script type="module" defer src="{% load_bundle 'build/main.js' %}"></script>
 
  </body>
 </html>
