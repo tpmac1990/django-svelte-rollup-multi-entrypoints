@@ -5,6 +5,7 @@
 	export let question_text;
 
 	// import GlobalStyles from '../../common/src/GlobalStyles.svelte';
+	import '../../common/src/styles.css';
 
 	import { count } from '../../svelte/store/stores.js';
 	import { other_count } from '../../svelte/store/counter.js';
@@ -29,8 +30,8 @@
 <!-- <GlobalStyles /> -->
 
 <main>
-	<h1 class=''>Hello Ma DA {name}!</h1>
-	<p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
+	<h1 class='underline'>Hello Ma DA {name}!</h1>
+	<p class='underline'>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
 
 	<!-- lazy loading -->
 	{#await import("./Nested.svelte") then Module}
