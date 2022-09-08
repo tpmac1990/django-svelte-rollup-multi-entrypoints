@@ -38,20 +38,20 @@ export default {
 	input: {
         main: path.resolve(__dirname, 'mysite/polls/src/main.js'),
         other: path.resolve(__dirname, 'mysite/other/src/other.js'),
-		sform: path.resolve(__dirname, 'mysite/sform/src/sform.js')
+		sform: path.resolve(__dirname, 'mysite/sform/src/sform.js'),
+		// output: path.resolve(__dirname, 'mysite/common/src/output.css')
     },
     output: {
         sourcemap: false,
         format: 'esm',
         dir: path.resolve(public_dir, 'build/'),
-		entryFileNames: '[name].[hash].js',
+		entryFileNames: `[name]${production && '.[hash]' || ''}.js`,
 		// // using '[name].[hash].js' in development breaks hot-reload
         chunkFileNames: `[name]${production && '-[hash]' || ''}.js`,
-		// chunkFileNames: `[name]-[hash].js`,
-		// assetFileNames: "[name]-[hash][extname]",
+		assetFileNames: "[name]-[hash][extname]", // .css file
     },
 	plugins: [
-		del({ targets: path.resolve(public_dir, 'build/*{.,-}*.js') }), // only delete chunk files, other files will be over written
+		del({ targets: path.resolve(public_dir, 'build/*{.,-}*.{js,css}') }), // only delete chunk files, other files will be over written
 		svelte({
 			compilerOptions: {
 				// enable run-time checks when not in production
@@ -60,9 +60,6 @@ export default {
 			// This tells svelte to run some preprocessing
 			preprocess: sveltePreprocess({
 				postcss: true,  // And tells it to specifically run postcss!
-				// defaults: {
-				// 	style: 'postcss',
-				// },
 			}),
 		}),
 		// create a manifest file to match file names with their hash equivalents
@@ -70,7 +67,9 @@ export default {
 		// we'll extract any component CSS out into
 		// a separate file - better for performance
 		// css({ output: `bundle.css` }),
-		styles(),
+		styles({
+			mode: ["extract", "bundle.css"],
+		}),
 
 		// If you have external dependencies installed from
 		// npm, you'll most likely need these plugins. In

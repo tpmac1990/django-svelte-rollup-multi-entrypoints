@@ -2,13 +2,15 @@
 	export let questions;
 	export let other;
 
-	import GlobalStyles from '../../common/src/GlobalStyles.svelte';
+	// import style from '../../svelte/public/build/assets/my-bundle-a3b8c7db.css'
+
+	// import GlobalStyles from '../../common/src/GlobalStyles.svelte';
 </script>
 
-<GlobalStyles />
+<!-- <GlobalStyles /> -->
 
 <main>
-	<h1>Bye Ma Car World!</h1>
+	<h1 class='text-4xl'>Bye Ma Car World!</h1>
 	<p>find a list below:</p>
 	<p>{other}</p>
 	<ul>

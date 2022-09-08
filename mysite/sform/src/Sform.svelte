@@ -1,9 +1,7 @@
 <script>
 	export let csrfToken;
 
-	import GlobalStyles from '../../common/src/GlobalStyles.svelte';
-
-
+	// import GlobalStyles from '../../common/src/GlobalStyles.svelte';
 
 	import { onMount } from 'svelte';
 	import { getTodoList } from "./todo";
@@ -18,7 +16,7 @@
 	});
 </script>
 
-<GlobalStyles />
+<!-- <GlobalStyles /> -->
 
 <main>
 	<h1 class='text-2xl underline'>Bye Ma Car World!</h1>

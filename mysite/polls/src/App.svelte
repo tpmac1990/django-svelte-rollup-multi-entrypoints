@@ -4,7 +4,7 @@
 	export let questions;
 	export let question_text;
 
-	import GlobalStyles from '../../common/src/GlobalStyles.svelte';
+	// import GlobalStyles from '../../common/src/GlobalStyles.svelte';
 
 	import { count } from '../../svelte/store/stores.js';
 	import { other_count } from '../../svelte/store/counter.js';
@@ -26,7 +26,7 @@
 	}
 </script>
 
-<GlobalStyles />
+<!-- <GlobalStyles /> -->
 
 <main>
 	<h1 class=''>Hello Ma DA {name}!</h1>
