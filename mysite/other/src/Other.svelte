@@ -1,18 +1,12 @@
 <script>
 	export let questions;
 	export let other;
-
-	// import style from '../../svelte/public/build/assets/my-bundle-a3b8c7db.css'
-
-	// import GlobalStyles from '../../common/src/GlobalStyles.svelte';
 </script>
-
-<!-- <GlobalStyles /> -->
 
 <main>
 	<h1 class='text-4xl'>Bye Ma Car World!</h1>
 	<p>find a list below:</p>
-	<p>{other}</p>
+	<p class="underline text-3xl">{other}</p>
 	<ul>
 		{#each questions as prop}
 			<li>{prop.question_text}</li>
@@ -21,7 +15,7 @@
 	<div class="text-2xl font-bold underline">
 		<span>hello</span>
 		<span>tailwind</span>
-		<span>css</span>
+		<span>css world</span>
 	</div>
 </main>
 
