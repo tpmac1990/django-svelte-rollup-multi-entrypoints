@@ -5,6 +5,7 @@ import json
 import os
 import re
 from django.utils.safestring import mark_safe
+import time
 
 MANIFEST_FILENAME = 'manifest.json'
 JS = 'js'
@@ -52,5 +53,13 @@ def hash_static(relative_path):
             if re.match(rf"{no_ext_name}.*\.{ext}", x):
                 ls.append(x)
 
-        path = static(os.path.join(file_dir, ls[0]))
+        for i in range(0,10):
+            while True:
+                try:
+                    path = static(os.path.join(file_dir, ls[0]))
+                except Exception:
+                    time.sleep(0.1)
+                    continue
+                break
+
         return mark_safe(f'<link rel="stylesheet" type="text/css" href="{path}" />')
