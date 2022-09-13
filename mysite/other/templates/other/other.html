@@ -1,18 +1,12 @@
+{% extends "common/base_svelte.html" %}
 {% load static hash_static %}
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8">
 
-    {% hash_static 'build/bundle.css' %}
-    
-    <title>Other</title>
-  </head>
-  <body>
+{% block title %}Other{% endblock %}
 
-    <script>window.props = {{ props|safe }};</script>
+{% block body_content %}
 
-    {% hash_static 'build/other.js' %}
+  <script>window.props = {{ props|safe }};</script>
 
-  </body>
-</html>
+  {% hash_static 'build/other.js' %}
+
+{% endblock %}

@@ -1,0 +1,22 @@
+{% load django_browser_reload %}
+{% load static hash_static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+
+    {% hash_static 'build/bundle.css' %}
+
+    {% block head_content %}
+    {% endblock %}
+
+    <script src="https://kit.fontawesome.com/69163e2cfc.js" crossorigin="anonymous"></script>
+
+    <title>
+        {% block title %}
+        {% endblock %}
+    </title>
+  </head>
+  {% block body %}
+  {% endblock %}
+</html>

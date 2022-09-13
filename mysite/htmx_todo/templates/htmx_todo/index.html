@@ -1,19 +1,10 @@
-{% load django_browser_reload %}
+{% extends "common/base_django.html" %}
 {% load static hash_static %}
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8">
 
-    {% hash_static 'build/bundle.css' %}
+{% block title %}HTMX Todo{% endblock %}
 
-    <script src="https://kit.fontawesome.com/69163e2cfc.js" crossorigin="anonymous"></script>
-
-    <title>HTMX Todo</title>
-  </head>
-  <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
-    
-    
+{% block body_content %}
+     
     <div class="flex justify-center items-center">
         <div class="text-center"
             id="todos"
@@ -33,11 +24,4 @@
         </div>
     </div>
 
-    <script src="https://unpkg.com/htmx.org@1.1.0"></script>
-    <script>
-        document.body.addEventListener('htmx:configRequest', (event) => {
-          event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
-        })
-    </script>
-  </body>
-</html>
+{% endblock %}

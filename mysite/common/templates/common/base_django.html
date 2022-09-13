@@ -1,0 +1,28 @@
+{% extends "common/base.html" %}
+{% load django_browser_reload %}
+{% load static hash_static %}
+
+{% block head_content %}
+
+    <script src="https://kit.fontawesome.com/69163e2cfc.js" crossorigin="anonymous"></script>
+
+{% endblock %}
+
+
+{% block body %}
+
+    <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+        
+        
+        {% block body_content %}
+        {% endblock %}
+
+        <script src="https://unpkg.com/htmx.org@1.1.0"></script>
+        <script>
+            document.body.addEventListener('htmx:configRequest', (event) => {
+            event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
+            })
+        </script>
+    </body>
+
+{% endblock %}

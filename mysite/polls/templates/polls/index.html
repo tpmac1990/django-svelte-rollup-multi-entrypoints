@@ -1,13 +1,7 @@
-{% load django_browser_reload %}
-{% load static hash_static %}
-<!DOCTYPE html>
-<html>
-   <head>
-      <meta charset="UTF-8">
-      {% hash_static 'build/bundle.css' %}
-      <title>Example</title>
-   </head>
-   <body>
-      <h1 class='text-3xl mt-10'>index pages</h1>
-   </body>
-</html>
+{% extends "common/base_svelte.html" %}
+
+{% block title %}Example{% endblock %}
+
+{% block body_content %}
+   <h1 class='text-3xl mt-10'>index page</h1>
+{% endblock %}
