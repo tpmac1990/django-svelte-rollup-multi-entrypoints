@@ -1,0 +1,14 @@
+<div
+    id="todos"
+    name="todo_list"
+    hx-target="#todos"
+    hx-swap="outerHTML"
+>
+
+    {% include "./todo_list.html" with todo_list=todo_list %}
+    
+    <br/>
+
+    {% include "./todo_list.html" with todo_list=complete_list %}
+
+</div>

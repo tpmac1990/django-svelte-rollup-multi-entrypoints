@@ -6,21 +6,15 @@
 {% block body_content %}
      
     <div class="flex justify-center items-center">
-        <div class="text-center"
-            id="todos"
-            hx-target="#todos"
-            hx-swap="outerHTML">
-
+        <div class="text-center">
             <h1 class="text-red-500 uppercase text-6xl font-thin my-4">HTMX Todo List</h1>
+            <form>
+    
+                {% include "./todo_add.html" %}
 
-            {% include "./todo_add.html" %}
-
-            {% include "./todo_list.html" with todo_list=todo_list %}
-
-            <br/>
-
-            {% include "./todo_list.html" with todo_list=complete_list %}
-
+                {% include "./partials/todo_lists.html" %}
+    
+            </form>
         </div>
     </div>
 

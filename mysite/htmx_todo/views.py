@@ -7,7 +7,6 @@ POST = "POST"
 PUT = 'PUT'
     
 def todo_tasks(request):
-    template = 'htmx_todo/index.html'
 
     if request.htmx:
 
@@ -36,8 +35,10 @@ def todo_tasks(request):
         "todo_list": Todo.objects.filter(complete=False),
         "complete_list": Todo.objects.filter(complete=True),
     }
-        
-    return render(request, template, context)
+    
+    if request.htmx:
+        return render(request, 'htmx_todo/partials/todo_lists.html', context)
+    return render(request, 'htmx_todo/index.html', context)
 
 
     

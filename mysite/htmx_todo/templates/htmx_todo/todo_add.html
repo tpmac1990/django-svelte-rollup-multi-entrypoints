@@ -1,9 +1,16 @@
 <div class="w-full grid grid-cols-5 mb-3">
-    <input type="text" class="w-full col-span-4" name="new-todo">
+    <input 
+        id="add-todo" 
+        type="text" 
+        class="w-full col-span-4" 
+        name="new-todo"
+    >
     <button 
         class="col-span-1 hover:border-sky-600 hover:bg-slate-100"
         hx-post="{% url 'todo' %}"
-        hx-include="[name='new-todo']">
+        hx-target="#todos"
+        _="on click put '' into #add-todo's value"
+    >
         Add
     </button>
 </div>
