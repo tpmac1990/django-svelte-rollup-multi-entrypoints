@@ -12,7 +12,8 @@
 {% block body %}
 
     <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
-        
+
+        {% include "common/nav_bar.html" %}
         
         {% block body_content %}
         {% endblock %}
