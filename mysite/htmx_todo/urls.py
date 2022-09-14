@@ -4,5 +4,5 @@ from .views import todo_tasks
 
 
 urlpatterns = [
-    path('', todo_tasks, name='todo'),
+    path('', todo_tasks, name='htmx_todo'),
 ]

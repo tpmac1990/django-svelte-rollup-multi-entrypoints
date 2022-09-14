@@ -7,7 +7,7 @@
     >
     <button 
         class="col-span-1 hover:border-sky-600 hover:bg-slate-100"
-        hx-post="{% url 'todo' %}"
+        hx-post="{% url 'htmx_todo' %}"
         hx-target="#todos"
         _="on click put '' into #add-todo's value"
     >

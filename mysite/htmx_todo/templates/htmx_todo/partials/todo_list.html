@@ -17,12 +17,12 @@
                     type="checkbox"
                     name="is_complete" 
                     {% if todo.complete %} checked {% endif %} 
-                    hx-put="{% url 'todo' %}?id={{ todo.id }}&checked"
+                    hx-put="{% url 'htmx_todo' %}?id={{ todo.id }}&checked"
                 />
             </div>
             <div 
                 class="col-span-1 py-2 text-grey text-stone-300 hover:text-red-400" 
-                hx-delete="{% url 'todo' %}?id={{ todo.id }}"
+                hx-delete="{% url 'htmx_todo' %}?id={{ todo.id }}"
                 hx-target="#todos"
                 hx-confirm="Are you sure you want to delete this todo?">
                 <i class="fa-solid fa-trash"></i>
