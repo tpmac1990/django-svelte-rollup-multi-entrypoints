@@ -6,6 +6,8 @@
 
     <script src="https://kit.fontawesome.com/69163e2cfc.js" crossorigin="anonymous"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+
 {% endblock %}
 
 
@@ -15,8 +17,10 @@
 
         {% include "common/nav_bar.html" %}
         
-        {% block body_content %}
-        {% endblock %}
+        <div class="mx-20">
+            {% block body_content %}
+            {% endblock %}
+        </div>
 
         <script src="https://unpkg.com/htmx.org@1.1.0"></script>
         <script src="https://unpkg.com/hyperscript.org@0.9.7"></script>
@@ -25,6 +29,10 @@
             event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
             })
         </script>
+
+        {% block script_content %}
+        {% endblock %}
+
     </body>
 
 {% endblock %}
