@@ -1,0 +1,50 @@
+[
+    {
+        "model": "htmx_todo.todo",
+        "pk": 1,
+        "fields": {
+            "item": "clean house",
+            "complete": true
+        }
+    },
+    {
+        "model": "htmx_todo.todo",
+        "pk": 2,
+        "fields": {
+            "item": "go for a walk",
+            "complete": true
+        }
+    },
+    {
+        "model": "htmx_todo.todo",
+        "pk": 3,
+        "fields": {
+            "item": "bake cake",
+            "complete": true
+        }
+    },
+    {
+        "model": "htmx_todo.todo",
+        "pk": 4,
+        "fields": {
+            "item": "buy groceries",
+            "complete": false
+        }
+    },
+    {
+        "model": "htmx_todo.todo",
+        "pk": 5,
+        "fields": {
+            "item": "drink water",
+            "complete": false
+        }
+    },
+    {
+        "model": "htmx_todo.todo",
+        "pk": 6,
+        "fields": {
+            "item": "listen to podcast",
+            "complete": false
+        }
+    }
+]
