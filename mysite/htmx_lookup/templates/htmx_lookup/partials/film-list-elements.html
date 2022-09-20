@@ -1,0 +1,37 @@
+{% for film in films %}
+
+    <div>
+        <input type="hidden" name="film_order" value="{{ film.pk }}" />
+        <li class="border-2 border-slate-300 mb-1 list-none px-4 py-2 w-3/5
+                    hover:border-sky-600">
+            <a hx-get="{% url 'detail' film.pk %}" 
+                hx-target="#film-list"
+                hx-push-url="/htmx-lookup/films/{{ film.film.slug }}"
+                hx-swap="innerHTML"
+                class="text-gray-600">
+                #{{film.order}} {{ film.film.name }}
+            </a>
+            <span class="float-right outline rounded-xl outline-1 outline-offset-2 outline 
+                        outline-slate-200 text-red-6 00 hover:outline-red-600" 
+                style="cursor: pointer;"
+                hx-delete="{% url 'delete-film' film.pk %}"
+                hx-target="#film-list"
+                hx-confirm="Are you sure you wish to delete?">X</span>
+        </li>
+    </div>
+
+{% endfor %}
+
+{% comment %} oob needs to be in a component which is being updated {% endcomment %}
+{% if not page_obj.has_next and page_obj.number > 1 %}
+    <button
+        id="film-list-btn"
+        class="mt-4 hover:border-sky-600"
+        hx-get="{% url 'film-list' %}?page={{ page_obj.number|add:1 }}" 
+        hx-trigger="click" 
+        hx-swap="afterend" 
+        hx-target="#list-elements"
+        hx-swap-oob="true"
+        disabled
+    >More</button>
+{% endif %}

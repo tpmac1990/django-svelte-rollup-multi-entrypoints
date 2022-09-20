@@ -1,0 +1,38 @@
+{% extends 'common/base_django.html' %}
+
+{% block body_content %}
+<div class="">
+    <main class="grid grid-rows-2 mx-40">
+        <section id="film-list" class="mt-10">
+            {% include 'htmx_lookup/partials/film-list.html' %}
+        </section>
+        <section class="mt-10 text-2xl">
+            {% comment %} render_block package allows to reference partial within the same template {% endcomment %}
+            {% block film-count %}
+            <div
+                id="film-count"
+                hx-trigger="filmCount from:body" 
+                hx-get="{% url 'film-count' %}" 
+                hx-swap="outerHTML"
+            >There are currently <span class="font-bold">{{ film_count }}</span> films in your list</div>
+            {% endblock %}
+        </section>
+    </main>
+</div>
+{% endblock %}
+
+
+{% block script_content %}
+    <script>
+        htmx.onLoad(function(content) {
+            var sortables = content.querySelectorAll(".sortable");
+            for (var i = 0; i < sortables.length; i++) {
+                var sortable = sortables[i];
+                new Sortable(sortable, {
+                    animation: 150,
+                    ghostClass: 'blue-background-class'
+                });
+            }
+        })
+    </script>
+{% endblock %}

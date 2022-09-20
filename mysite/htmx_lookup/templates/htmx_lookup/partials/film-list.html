@@ -1,0 +1,53 @@
+<div class="grid grid-cols-2">
+    <h2 class="text-xl">My Films</h2>
+    <form class="flex flex-row justify-end" hx-post="{% url 'add-film' %}" hx-target='#film-list'>
+        {% csrf_token %}
+        <input type="text" 
+            id="filmname-input"
+            name="filmname" 
+            placeholder="Enter a film" />
+        <button type="submit" class="">Add Film</button>
+    </form>
+</div>
+<hr/>
+
+<div class="grid grid-cols-6 mt-4">
+   
+    <section class="col-span-4">
+
+        {% if messages %}
+        <ul class="text-green-600" hx-get="{% url 'clear' %}" hx-trigger="load delay:3s">
+            {% for message in messages %}
+            <li {% if message.tags %} class=""{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
+        {% if films %}
+        
+            {% csrf_token %}
+            <form id="list-elements" class="sortable" hx-trigger="end" hx-post="{% url 'sort' %}" hx-target="#film-list">
+                <div class="htmx-indicator h-10">Updating...</div>
+                {% include 'htmx_lookup/partials/film-list-elements.html' %}
+            </form>
+            <button
+                id="film-list-btn"
+                class="mt-4 hover:border-sky-600"
+                hx-get="{% url 'film-list' %}?page={{ page_obj.number|add:1 }}" 
+                hx-trigger="click" 
+                hx-swap="beforeend" 
+                hx-target="#list-elements"
+                {% if not page_obj.has_next %}
+                disabled
+                {% endif %}
+            >More</button>
+        {% else %}
+            <p>You do not have any films in your list</p>
+        {% endif %}
+
+    </section>
+
+    <section class="col-span-2">
+        {% include 'htmx_lookup/partials/search.html' %}
+    </section>
+</div>

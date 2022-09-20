@@ -1,0 +1,11 @@
+{% extends 'common/base_django.html' %}
+
+{% block body_content %}
+<div class="">
+    <main class="">
+        <section id="film-list" class="mt-10 mx-40">
+            {% include 'htmx_lookup/partials/film-detail.html' %}
+        </section>
+    </main>
+</div>
+{% endblock %}
