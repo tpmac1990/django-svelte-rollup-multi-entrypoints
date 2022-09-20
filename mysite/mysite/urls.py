@@ -15,12 +15,19 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+from django.conf import settings
+from django.conf.urls.static import static
+
 
 urlpatterns = [
+    path('registration/', include('registration.urls')),
     path('polls/', include('polls.urls')),
     path('other/', include('other.urls')),
     path('sform/', include('sform.urls')),
-    path('htmx_todo/', include('htmx_todo.urls')),
+    path('htmx-todo/', include('htmx_todo.urls')),
+    path('htmx-lookup/', include('htmx_lookup.urls')),
+    path('htmx-form/', include('htmx_form.urls')),
     path('admin/', admin.site.urls),
     path("__reload__/", include("django_browser_reload.urls")), # live-reload for django templates
-]
+    path('__debug__/', include('debug_toolbar.urls')),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

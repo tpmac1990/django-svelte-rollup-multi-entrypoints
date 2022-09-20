@@ -1,0 +1,29 @@
+{% extends 'registration/base.html' %}
+{% load widget_tweaks %}
+
+{% block form_title %}Register{% endblock %}
+
+{% block form_content %}
+    <form method="POST" action="{% url 'register' %}" autocomplete='off' class="mt-4">
+        {% csrf_token %}
+
+        <div class="mb-3">
+            <label class="text-left">{{ form.username.label_tag }}</label>
+            {{ form.username.errors }}
+            {% render_field form.username class="w-full" hx-post="/registration/check_username/" hx-swap="outerhtml" hx-trigger="keyup changed" hx-target="#username-error" placeholder="Username" %}
+            <div id="username-error"></div>
+
+            <label class="text-left">{{ form.password1.label_tag }}</label>
+            {{ form.password1.errors }}
+            {% render_field form.password1 class="w-full" placeholder="Password" %}
+
+            <label class="text-left">{{ form.password2.label_tag }}</label>
+            {{ form.password2.errors }}
+            {% render_field form.password2 class="w-full" placeholder="Password confirmation" %}
+        </div>
+        
+        <button type="submit" class="w-full mb-4 hover:border-sky-600 hover:bg-slate-100">Register</button>
+
+        <a href="{% url 'login' %}">Login</a>
+    </form>
+{% endblock %}

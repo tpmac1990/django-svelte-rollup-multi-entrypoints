@@ -38,18 +38,25 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'widget_tweaks',
+    'django_extensions',
+    'debug_toolbar',
     'django_browser_reload',
     'django_htmx',
     'other',
     'common',
     'sform',
     'htmx_todo',
+    'htmx_lookup',
+    'registration',
+    'htmx_form',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -130,7 +137,23 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
-
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "svelte", "public"), 
 )
+
+MEDIA_ROOT = os.path.join(BASE_DIR, "media"),
+MEDIA_URL = '/media/'
+
+
+AUTH_USER_MODEL = 'registration.User'
+
+LOGIN_URL = 'login'
+
+LOGIN_REDIRECT_URL = 'htmx-lookup/index'
+LOGOUT_REDIRECT_URL = 'htmx-lookup/index'
+
+PAGINATE_BY = 3
+
+INTERNAL_IPS = [
+    '127.0.0.1',
+]

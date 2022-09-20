@@ -1,0 +1,20 @@
+{% extends 'common/base_django.html' %}
+
+{% block body_content %}
+<div class="flex justify-center items-center">
+    <div class="text-center">
+        <p class="text-red-500 uppercase text-6xl font-thin my-4">
+
+            {% block form_title %}
+            {% endblock %}
+
+        </p>
+        <hr/>
+        
+        {% block form_content %}
+        {% endblock %}
+
+    </div>
+</div>
+
+{% endblock %}
