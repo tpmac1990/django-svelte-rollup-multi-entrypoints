@@ -1,0 +1,234 @@
+{% extends 'common/base_django.html' %}
+
+{% block body_content %}
+<div class="container mx-auto my-6 max-w-xl">
+    <h1 class="text-red-500 uppercase text-6xl font-thin my-4">Alpine.js Demo</h1>
+
+    <!-- x-data - Declare a new Alpine component and its data for a block of HTML -->
+    <div
+        x-data="{
+        open: false, 
+        name: 'Brad',
+        search: '',
+        posts: [
+            {title: 'Post One'},
+            {title: 'Post Two'},
+            {title: 'Post Three'},
+            {title: 'Post Four'},
+        ]
+    }"
+    >
+        <!-- x-on - Listen for browser events on an element -->
+        <!-- You can also use @click -->
+        <!-- x-bind - Dynamically set HTML attributes on an element -->
+        <section class="mt-10 mb-4 bg-slate-100 p-10">
+            <h2 class="text-2xl mb-4 text-slate-600">Toggle component with transition</h2>
+            <button
+                x-on:click="open = !open"
+                :class="open ? 'bg-blue-800' : 'bg-slate-700'"
+                class="text-white px-5 py-3 text-lg bg-sky-800 hover:bg-slate-500"
+            >
+                Toggle
+            </button>
+
+            <!-- x-show - Toggle the visibility of an element-->
+            <div x-show="open" x-transition x-cloak>
+                <p class="bg-gray-200 p-4 my-6 rounded">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat
+                quos laboriosam, minus rerum molestias soluta nisi nulla eos error
+                nihil.
+                </p>
+            </div>
+        </section>
+
+        <!-- x-text - Set the text content of an element / display data -->
+        <section class="mt-10 mb-4 bg-slate-100 p-10">
+            <h2 class="text-2xl mb-4 text-slate-600">Use component state</h2>
+            <div class="my-4">
+                The value of name is <span x-text="name" class="font-bold"></span>
+            </div>
+        </section>
+
+        <!-- x-effect - Execute a script each time one of its dependancies change -->
+        <div x-effect="console.log(open)"></div>
+
+        <!-- x-model - Synchronize a piece of data with an input element -->
+        <section class="mt-10 mb-4 bg-slate-100 p-10">
+            <h2 class="text-2xl mb-4 text-slate-600">Track input changes</h2>
+            <input
+                x-model="search"
+                type="text"
+                class="border p-2 w-full mb-2 mt-6"
+                placeholder="Search for something..."
+            />
+            <p>
+                <span class="font-bold">Searching for:</span>
+                <span x-text="search"></span>
+            </p>
+        </section>
+
+        <!-- x-if - Conditionally add/remove a block of HTML from the page entirely -->
+        <section class="mt-10 mb-4 bg-slate-100 p-10">
+            <h2 class="text-2xl mb-4 text-slate-600">Conditionally add/remove</h2>
+            <button
+                x-on:click="open = !open"
+                :class="open ? 'bg-blue-800' : 'bg-slate-700'"
+                class="text-white px-5 py-3 text-lg bg-sky-800 hover:bg-slate-500"
+            >
+                Toggle
+            </button>
+            <template x-if="open">
+                <div class="bg-gray-50 p-2 mt-8">Template based on a condition</div>
+            </template>
+        </section>
+
+        <!-- x-for - Loop over an array of data -->
+        <section class="mt-10 mb-4 bg-slate-100 p-10">
+            <h2 class="text-2xl mb-4 text-slate-600">Loop over array</h2>
+            <h3 class="text-xl mt-6 mb-3 font-bold">Posts</h3>
+            <template x-for="post in posts">
+                <div x-text="post.title"></div>
+            </template>
+            <button
+                @click="posts.push({title: 'New Post'})"
+                class="text-white px-5 py-3 text-lg bg-sky-800 hover:bg-slate-500"
+            >
+                Add Post
+            </button>
+        </section>
+
+        <!-- x-ref - Reference elements directly by their specified keys using the $refs magic property -->
+        <section class="mt-10 mb-4 bg-slate-100 p-10">
+            <h2 class="text-2xl mb-4 text-slate-600">Reference other elements</h2>
+            <div class="my-6">
+                <button
+                    @click="$refs.text.innerHTML = ''"
+                    {% comment %} @click="$refs.text.remove()" {% endcomment %}
+                    class="text-white px-5 py-3 text-lg bg-sky-800 hover:bg-slate-500"
+                >
+                Click
+                </button>
+                <div 
+                    class="mt-4 text-xl w-30 bg-slate-100 p-4"
+                    x-ref="text">
+                        Hello World
+                </div>
+            </div>
+        </section>
+
+        <!-- x-html - Set the inner HTML of an element -->
+        <section class="mt-10 mb-4 bg-slate-100 p-10">
+            <h2 class="text-2xl mb-4 text-slate-600">Load a partial</h2>
+            <div x-html="(await axios.get('{% url 'get-partial' %}')).data">...</div>
+        </section>
+
+        <!-- $el - Reference the current DOM element -->
+        <section class="mt-10 mb-4 bg-slate-100 p-10">
+            <h2 class="text-2xl mb-4 text-slate-600">Reference the current DOM element</h2>
+            <button
+                x-on:click="$el.innerHTML = 'Hello World'"
+                class="text-white px-5 py-3 text-lg bg-sky-800 hover:bg-slate-500"
+            >
+                Replace Text
+            </button>
+        </section>
+
+        <!-- $watch - Watch a component property -->
+        <section class="mt-10 mb-4 bg-slate-100 p-10">
+            <h2 class="text-2xl mb-4 text-slate-600">Watch 'posts' state and log to console on change</h2>
+            <div x-init="$watch('posts', value => console.log(value))"></div>
+        </section>
+
+        <!-- $dispatch - Shortcut for dispatching browser events -->
+        <section class="mt-10 mb-4 bg-slate-100 p-10">
+            <h2 class="text-2xl mb-4 text-slate-600">Dispatch browser events</h2>
+            <div @notify="alert('You have been notified!')">
+                <button
+                @click="$dispatch('notify')"
+                class="text-white px-5 py-3 text-lg bg-sky-800 hover:bg-slate-500"
+                >
+                Notify
+                </button>
+            </div>
+        </section>
+
+        <!-- $data - Gives access to current Alpine data scope -->
+        <section class="mt-10 mb-4 bg-slate-100 p-10">
+            <h2 class="text-2xl mb-4 text-slate-600">Click event for js script</h2>
+            <button
+                @click="getLatestPost($data.posts)"
+                class="text-white px-5 py-3 text-lg bg-sky-800 hover:bg-slate-500"
+            >
+                Get Latest Post
+            </button>
+        </section>
+
+        <!-- alpine mask plugin -->
+        <section class="mt-10 mb-4 bg-slate-100 p-10">
+            <h2 class="text-2xl mb-4 text-slate-600">Alpine mask plugin</h2>
+            <div class="mt-6">
+                <h3 class="text-2xl mb-2">Enter a date:</h3>
+                <input
+                class="border w-full p-2"
+                x-mask="99/99/9999"
+                placeholder="MM/DD/YYYY"
+                />
+            </div>
+        </section>
+
+        <!-- Stores: Dark Mode -->
+        <section class="mt-10 mb-4 bg-slate-100 p-10">
+            <h2 class="text-2xl mb-4 text-slate-600">Global state store</h2>
+            <div
+                x-data
+                :class="$store.darkMode.on && 'bg-gray-800 text-white'"
+                class="container mx-auto max-w-sm mt-6 bg-gray-50 p-4"
+            >
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis, reiciendis
+                ipsa. Sed, illo, repellat ipsam, perspiciatis soluta labore quasi in eos
+                hic harum praesentium perferendis? Dignissimos, unde provident voluptas,
+                ad neque ea tempora nam ratione eligendi modi laudantium, iusto officia.
+
+                <button
+                    @click="$store.darkMode.toggle()"
+                    :class="$store.darkMode.on && 'bg-gray-700'"
+                    class="text-white px-5 py-3 text-lg bg-sky-800 hover:bg-slate-500"
+                >
+                    Toggle Dark Mode
+                </button>
+            </div>
+        </section>
+
+        <!-- JS in line to create text -->
+        <section class="mt-10 mb-4 bg-slate-100 p-10">
+            <h2 class="text-2xl mb-4 text-slate-600">JS inline to create innerHTML</h2>
+            <footer x-data class="text-center mt-10">
+                <p>Copyright &copy; <span x-text="new Date().getFullYear()"></span></p>
+            </footer>
+        </section>
+    </div>
+</div>
+{% endblock %}
+
+
+
+{% block script_content %}
+    <script>
+        document.addEventListener("alpine:init", () => {
+            Alpine.store("darkMode", {
+            on: false,
+        
+            toggle() {
+                this.on = !this.on;
+            }
+            });
+        });
+    </script>
+
+    <script>
+        function getLatestPost(posts) {
+            console.log(posts.slice(-1).pop())
+        }
+    </script>
+{% endblock %}
+

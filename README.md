@@ -132,6 +132,22 @@ demonstrates: django-render-block
 
 
 
+## Alpine
+
+### Links
+docs: `https://alpinejs.dev/`
+tut: `https://www.youtube.com/watch?v=r5iWCtfltso`
+mask plugin: `https://alpinejs.dev/plugins/mask`
+
+### Summary
+A bunch if small elements to demonstrate the various uses of Alpine.js. All code can be managed inside the html file like htmx, but it can also be coupled with other js files. This demonstrates; toggling, transitions, component & global level state management, for loops, conditionals, referencing elements, loading partials with axios. 
+Uses: Alpine
+demonstrates: events, transitions, state, masks
+
+
+
+
+
 
 
 

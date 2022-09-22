@@ -8,6 +8,9 @@
 
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
 
+    <!-- Axios: if used in Alpine.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.min.js" integrity="sha512-odNmoc1XJy5x1TMVMdC7EMs3IVdItLPlCeL5vSUPN2llYKMJ2eByTTAIiiuqLg+GdNr9hF6z81p27DArRFKT7A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 {% endblock %}
 
 
@@ -22,8 +25,18 @@
             {% endblock %}
         </div>
 
+        <!-- Htmx -->
         <script src="https://unpkg.com/htmx.org@1.1.0"></script>
+
+        <!-- Hyperscript -->
         <script src="https://unpkg.com/hyperscript.org@0.9.7"></script>
+
+        <!-- Alpine Plugins -->
+        <script defer src="https://unpkg.com/@alpinejs/mask@3.x.x/dist/cdn.min.js"></script>
+        
+        <!-- Alpine Core -->
+        <script src="//unpkg.com/alpinejs" defer></script>
+
         <script>
             document.body.addEventListener('htmx:configRequest', (event) => {
             event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';

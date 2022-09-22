@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'htmx_lookup',
     'registration',
     'htmx_form',
+    'alpine',
 ]
 
 MIDDLEWARE = [

@@ -27,6 +27,7 @@ urlpatterns = [
     path('htmx-todo/', include('htmx_todo.urls')),
     path('htmx-lookup/', include('htmx_lookup.urls')),
     path('htmx-form/', include('htmx_form.urls')),
+    path('alpine/', include('alpine.urls')),
     path('admin/', admin.site.urls),
     path("__reload__/", include("django_browser_reload.urls")), # live-reload for django templates
     path('__debug__/', include('debug_toolbar.urls')),
