@@ -39,6 +39,7 @@ export default {
         main: path.resolve(__dirname, 'mysite/polls/src/main.js'),
         other: path.resolve(__dirname, 'mysite/other/src/other.js'),
 		sform: path.resolve(__dirname, 'mysite/sform/src/sform.js'),
+		leaflet: path.resolve(__dirname, 'mysite/svelte_leaflet/src/main.js'),
 		// output: path.resolve(__dirname, 'mysite/common/src/output.css')
     },
     output: {

@@ -29,6 +29,7 @@ urlpatterns = [
     path('htmx-form/', include('htmx_form.urls')),
     path('alpine/', include('alpine.urls')),
     path('hyperscript/', include('hyperscript.urls')),
+    path('svelte-leaflet/', include('svelte_leaflet.urls')),
     path('admin/', admin.site.urls),
     path("__reload__/", include("django_browser_reload.urls")), # live-reload for django templates
     path('__debug__/', include('debug_toolbar.urls')),

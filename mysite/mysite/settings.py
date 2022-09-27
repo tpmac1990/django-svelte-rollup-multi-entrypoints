@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'htmx_form',
     'alpine',
     'hyperscript',
+    'svelte_leaflet',
 ]
 
 MIDDLEWARE = [
