@@ -18,6 +18,9 @@
 
     <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
 
+        {% block pre-script-content %}
+        {% endblock %}
+
         {% include "common/nav_bar.html" %}
         
         <div class="mx-20">

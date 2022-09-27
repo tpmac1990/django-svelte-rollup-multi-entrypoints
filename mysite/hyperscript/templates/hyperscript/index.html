@@ -1,0 +1,461 @@
+{% extends 'common/base_django.html' %}
+
+{% block pre-script-content %}
+    <script type="text/hyperscript">
+        behavior Removable(removeButton)
+            init
+                if no removeButton set the removeButton to me
+            end
+            on click from removeButton
+                remove me
+            end
+        end
+
+        behavior Draggable(dragHandle)
+            init
+                if no dragHandle set the dragHandle to me
+            end
+            on pointerdown(clientX, clientY) from dragHandle
+                halt the event
+                trigger draggable:start -- hooks, e.g. for adding a drop shadow while dragging
+                measure my x, y
+                set xoff to clientX - x
+                set yoff to clientY - y
+                repeat until event pointerup from document
+                    wait for pointermove(pageX, pageY) or
+                            pointerup  (pageX, pageY) from document
+                    add { left: ${pageX - xoff}px; top: ${pageY - yoff}px; }
+                    trigger draggable:move
+            end
+                trigger draggable:end
+        end
+    </script>
+{% endblock %}
+
+
+{% block body_content %}
+<div class="container mx-auto my-6 pb-20 max-w-xl">
+    <h1 class="text-red-500 uppercase text-6xl font-thin my-4">hyperscript demo</h1>
+
+    <div>
+        <!-- toggle -->
+        <section class="mt-10 mb-4 bg-slate-100 p-10">
+            <h2 class="text-2xl mb-4 text-slate-600">Toggle component</h2>
+            <button
+                class="text-white px-5 py-3 text-lg bg-sky-800 hover:bg-slate-500"
+                _="on click toggle .hidden on #toggle-1"
+            >
+                Toggle
+            </button>
+
+            <div id="toggle-1">
+                <p class="bg-gray-200 p-4 my-6 rounded">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat
+                quos laboriosam, minus rerum molestias soluta nisi nulla eos error
+                nihil.
+                </p>
+            </div>
+        </section>
+
+        <!-- toggle from another element -->
+        <section class="mt-10 mb-4 bg-slate-100 p-10">
+            <h2 class="text-2xl mb-4 text-slate-600">Toggle from toggled component</h2>
+            <button id="toggle-3" class="text-white px-5 py-3 text-lg bg-sky-800 hover:bg-slate-500">
+                Toggle
+            </button>
+
+            <div _="on click from #toggle-3 toggle .hidden">
+                <p class="bg-gray-200 p-4 my-6 rounded">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat
+                quos laboriosam, minus rerum molestias soluta nisi nulla eos error
+                nihil.
+                </p>
+            </div>
+        </section>
+
+        <!-- on click transition -->
+        <section class="mt-10 mb-4 bg-slate-100 p-10">
+            <h2 class="text-2xl mb-4 text-slate-600">Toggle & Transition on click</h2>
+            <button
+                class="text-white px-5 py-3 text-lg bg-sky-800 hover:bg-slate-500"
+                _="on click transition #toggle-2's opacity to 0 
+                    then add .hidden to #toggle-2
+                    then wait 2s
+                    then console.log('#toggle-2 is hidden')
+                    then remove .hidden from #toggle-2
+                    then transition #toggle-2's opacity from 0 to 100"
+            >
+                Toggle
+            </button>
+
+            <div id="toggle-2">
+                <p class="bg-gray-200 p-4 my-6 rounded">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat
+                quos laboriosam, minus rerum molestias soluta nisi nulla eos error
+                nihil.
+                </p>
+            </div>
+        </section>
+
+        <!-- Set the text content of an element / display data -->
+        <!-- appears as null -->
+        <section class="mt-10 mb-4 bg-slate-100 p-10">
+            <h2 class="text-2xl mb-4 text-slate-600">Use component state</h2>
+            <div class="my-4">
+                The value of name is <span class="font-bold" _="init put :name into me"></span>
+            </div>
+        </section>
+
+        <!-- Execute a script each time one of its dependancies change -->
+        <div></div>
+
+        <!-- Synchronize a piece of data with an input element -->
+        <!-- _="on keyup set #synchronize.innerHTML to my value" -->
+        <section class="mt-10 mb-4 bg-slate-100 p-10">
+            <h2 class="text-2xl mb-4 text-slate-600">Track input changes</h2>
+            <input
+                type="text"
+                class="border p-2 w-full mb-2 mt-6"
+                placeholder="Search for something..."
+                _="on keyup put my value into #synchronize.innerHTML"
+            />
+            <p>
+                <span class="font-bold">Searching for:</span>
+                <span id="synchronize"></span>
+            </p>
+        </section>
+
+        <!-- Conditionally add/remove a block of HTML from the page entirely -->
+        <!-- _="on click toggle between .bg-sky-800 and .bg-slate-700 on me 
+                    then toggle .hidden on #if-toggle" -->
+        <!-- _="on click if #if-toggle is .hidden then toggle .hidden on #if-toggle else toggle .hidden on #if-toggle" -->
+        <!-- I couldn't get add/remove to work -->
+        <section class="mt-10 mb-4 bg-slate-100 p-10">
+            <h2 class="text-2xl mb-4 text-slate-600">Conditionally add/remove</h2>
+            <button
+                class="text-white px-5 py-3 text-lg bg-sky-800 hover:bg-slate-500"
+                _="on click toggle .hidden on #if-toggle"
+            >
+                Toggle
+            </button>
+            <div id="if-toggle">
+                <div class="bg-gray-50 p-2 mt-8">Template based on a condition</div>
+            </div>
+        </section>
+
+        <!-- Loop over an array of data -->
+        <!-- this would need htmx -->
+        <section class="mt-10 mb-4 bg-slate-100 p-10">
+            <h2 class="text-2xl mb-4 text-slate-600">Loop over array (not possible)</h2>
+            <h3 class="text-xl mt-6 mb-3 font-bold">Posts</h3>
+            <template>
+                <div></div>
+            </template>
+            <button
+                class="text-white px-5 py-3 text-lg bg-sky-800 hover:bg-slate-500"
+            >
+                Add Post
+            </button>
+        </section>
+
+        <!-- Reference elements directly by their specified keys using the $refs magic property -->
+        <section class="mt-10 mb-4 bg-slate-100 p-10">
+            <h2 class="text-2xl mb-4 text-slate-600">Reference other elements</h2>
+            <div class="my-6">
+                <button
+                    class="text-white px-5 py-3 text-lg bg-sky-800 hover:bg-slate-500"
+                    _="on click put '' into the next <div/>"
+                >
+                Click
+                </button>
+                <div 
+                    class="mt-4 text-xl w-30 bg-slate-100 p-4"
+                >
+                    Hello World
+                </div>
+            </div>
+        </section>
+
+        <!-- Reference the current DOM element -->
+        <section class="mt-10 mb-4 bg-slate-100 p-10">
+            <h2 class="text-2xl mb-4 text-slate-600">Reference the current DOM element</h2>
+            <button
+                class="text-white px-5 py-3 text-lg bg-sky-800 hover:bg-slate-500"
+                _="on click set me.innerHTML to 'Hello World'"
+            >
+                Replace Text
+            </button>
+        </section>
+
+        <!-- Append to innerHTML -->
+        <section class="mt-10 mb-4 bg-slate-100 p-10">
+            <h2 class="text-2xl mb-4 text-slate-600">Append</h2>
+            <button
+                class="text-white px-5 py-3 text-lg bg-sky-800 hover:bg-slate-500"
+                _="on click append ' World' to #append-me"
+            >
+                Replace Text
+            </button>
+            <div id="append-me">Hello</div>
+        </section>
+
+        <!-- disable button until htmx call is complete -->
+        <section class="mt-10 mb-4 bg-slate-100 p-10">
+            <h2 class="text-2xl mb-4 text-slate-600">Disable button during htmx call</h2>
+            <button
+                class="text-white px-5 py-3 text-lg bg-sky-800 hover:bg-slate-500"
+                hx-get="{% url 'htmx-get' %}" 
+                hx-swap="outerHTML"
+                hx-target="#htmx-replace"
+                _="on click toggle @disabled until htmx:afterOnLoad"
+            >
+                Replace Text
+            </button>
+            <div id="htmx-replace" class="mt-4 text-xl w-30 bg-slate-100 p-4">Hello</div>
+        </section>
+
+        <!-- disable buttons until htmx call is complete -->
+        <!-- [disabled='true'] fails -->
+        <section 
+            class="mt-10 mb-4 bg-slate-100 p-10"
+            _="on every htmx:beforeSend in <button:not(.no-disable)/> 
+                tell it 
+                    toggle @disabled until htmx:afterOnLoad"
+        >
+            <h2 class="text-2xl mb-4 text-slate-600">Disable buttons during htmx call (no working)</h2>
+            <button
+                class="text-white px-5 py-3 text-lg bg-sky-800 hover:bg-slate-500"
+                hx-get="{% url 'htmx-get' %}" 
+                hx-swap="outerHTML"
+                hx-target="#htmx-replace-2"
+            >
+                Replace Text
+            </button>
+            <button class="text-white px-5 py-3 text-lg bg-sky-800 hover:bg-slate-500">
+                two
+            </button>
+            <button class="text-white px-5 py-3 text-lg bg-sky-800 hover:bg-slate-500">
+                three
+            </button>
+            <div id="htmx-replace-2" class="mt-4 text-xl w-30 bg-slate-100 p-4">Hello</div>
+        </section>
+
+        <!-- disable button until required fields are filled -->
+        <section class="mt-10 mb-4 bg-slate-100 p-10">
+            <h2 class="text-2xl mb-4 text-slate-600">Disabled button until fields filled</h2>
+            <form>
+                    <label class="control-label" for="nameInput">Name</label>
+                    <input id="nameInput" name="name" class="form-control" type="text" required placeholder="John Doe"/>
+                    
+                    <label class="control-label" for="emailInput">Email</label>
+                    <input id="emailInput" name="email" class="form-control" type="email" required placeholder="john@doe.org"/>
+                    <button _="on change from closest <form/>
+                                for elt in <[required]/>
+                                    if the elt's value is empty
+                                        add @disabled then exit
+                                    end
+                                end
+                                remove @disabled" class="btn btn-primary" disabled>Add User</button>
+                </div>
+            </form>
+        </section>
+
+        <!-- drag and drop -->
+        <section class="mt-10 mb-4 bg-slate-100 p-10">
+            <h2 class="text-2xl mb-4 text-slate-600">Drag & drop</h2>
+            <p _="on dragstart call event.dataTransfer.setData('text/plain',target.textContent)">
+                <button class="btn primary" draggable=true>DRAG ME</button>
+                <button class="btn primary" draggable=true>OR ME</button>
+            </p>
+            <pre _="
+                on dragover or dragenter halt the event
+                    then set the target's style.background to 'lightgray'
+                on dragleave or drop set the target's style.background to ''
+                on drop get event.dataTransfer.getData('text/plain')
+                    then put it into the next <output/>">Drop Area
+                &nbsp;
+                &nbsp;
+                &nbsp;
+                Drop Area
+            </pre>
+            Result: <output></output>
+        </section>
+
+        <!-- global table filter -->
+        <section class="mt-10 mb-4 bg-slate-100 p-10">
+            <h2 class="text-2xl mb-4 text-slate-600">Global table filter</h2>
+            <table class="table-auto">
+                <thead>
+                    <tr>
+                        <th>
+                            <input _="on input
+                                show <tbody>tr/> in closest <table/>
+                                when it's textContent.toLowerCase() contains my value.toLowerCase()"
+                            />
+                        </th>
+                    </tr>
+                </thead>
+                <tbody class="bg-slate-200">
+                    <tr><td>Foo Bar</td><td>Item 1</td></tr>
+                    <tr><td>Boo Bar</td><td>Item 2</td></tr>
+                    <tr><td>Gru Bar</td><td>Item 3</td></tr>
+                    <tr><td>Zoo Bar</td><td>Item 4</td></tr>
+                    <tr><td>Foo Bar</td><td>Item 5</td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- fetch data -->
+        <!-- _="on click fetch /clickedMessage put the result into me wait 2s put 'Click Me!' into me"> -->
+        <!-- _="on click fetch  /clickedMessage then transition opacity to 0
+                                 put the result into me then transition opacity to 1
+                                 wait 2s then transition opacity to 0
+                                 put 'Click Me!' into me then transition opacity to 1"> -->
+        <section class="mt-10 mb-4 bg-slate-100 p-10">
+            <h2 class="text-2xl mb-4 text-slate-600">Fetch data with endpoint</h2>
+            <button 
+                class='text-white px-5 py-3 text-lg bg-sky-800 hover:bg-slate-500' 
+                _="on click 
+                    add @disabled 
+                    fetch /hyperscript/htmx-get 
+                    put the result after me
+                    finally remove @disabled"
+            >
+                Click Me!
+            </button>
+        </section>
+
+        <!-- disable button -->
+        <!-- _="on click toggle [disabled]" -->
+        <section class="mt-10 mb-4 bg-slate-100 p-10">
+            <h2 class="text-2xl mb-4 text-slate-600">Disable button (fails)</h2>
+            <button 
+                class='text-white px-5 py-3 text-lg bg-sky-800 hover:bg-slate-500' 
+            >
+                Click Me!
+            </button>
+        </section>
+
+        <!-- send a trigger -->
+        <!-- parameters can be passed along with it -->
+        <section class="mt-10 mb-4 bg-slate-100 p-10">
+            <h2 class="text-2xl mb-4 text-slate-600">Send a trigger</h2>
+            <button 
+                class='text-white px-5 py-3 text-lg bg-sky-800 hover:bg-slate-500'
+                _="on click send foo to the next <output/>">Send Foo</button>
+            <button 
+                class='text-white px-5 py-3 text-lg bg-sky-800 hover:bg-slate-500'
+                _="on click trigger bar on the next <output/>">Send Bar</button><br/>
+            <output _="on foo put 'I got a foo event!' into me
+                    on bar put 'I got a bar event!' into me">
+                No Events Yet...
+            </output>
+        </section>
+
+        <!-- variables -->
+        <!-- element (:) scoped variable not working, used global instead -->
+        <!-- _="on click put the name of $x into the next <output/>" -->
+        <!-- _="on click put $x.name into the next <output/>" -->
+        <section 
+            class="mt-10 mb-4 bg-slate-100 p-10"
+            _="on load set $x to {name: 'frank', age: 21}"
+        >
+            <h2 class="text-2xl mb-4 text-slate-600">Global Variables / State</h2>
+            <button 
+                class="text-white px-5 py-3 text-lg bg-sky-800 hover:bg-slate-500"
+                _="on click put $x's name into the next <output/>">
+            Click Me
+            </button>
+            <output>--</output>
+        </section>
+
+        <!-- uses state from previous element -->
+        <section class="mt-10 mb-4 bg-slate-100 p-10">
+            <h2 class="text-2xl mb-4 text-slate-600">Global Variables / State 2</h2>
+            <button 
+                class="text-white px-5 py-3 text-lg bg-sky-800 hover:bg-slate-500"
+                _="on click 
+                    set details to 'My name is ' + $x.name + ', I am ' + $x.age + ' years old.' 
+                    then put details into the next <output/>"
+            >
+            Click Me
+            </button>
+            <output>--</output>
+        </section>
+
+        <!-- Use js inline -->
+        <section class="mt-10 mb-4 bg-slate-100 p-10">
+            <h2 class="text-2xl mb-4 text-slate-600">Use js inline</h2>
+                <input id="input" />
+                <button
+                    class="text-white px-5 py-3 text-lg bg-sky-800 hover:bg-slate-500"
+                    _="on click 
+                        set text to #input.value 
+                        js(text)
+                            return text.toUpperCase()
+                        end 
+                        put it into my.innerHTML"
+                >--</button>
+        </section>
+
+        <!-- intersecting -->
+        <section class="mt-10 mb-4 bg-slate-100 p-10">
+            <h2 class="text-2xl mb-4 text-slate-600">Intersection</h2>
+            <img _="on intersection(intersecting) having threshold 0.5
+                if intersecting transition opacity to 1
+                else transition opacity to 0"
+                src="https://placebear.com/200/300"
+            />
+        </section>
+
+        <!-- Intersecting an element on horizontal scroll -->
+        <section class="mt-10 mb-4 bg-slate-100 p-10">
+            <h2 class="text-2xl mb-4 text-slate-600">Element Intersection</h2>
+            <div class="h-52 w-full px-2 py-3 bg-gray-200 flex flex-nowrap overflow-x-scroll">
+                {% for x in '012345678'|make_list %}
+                    <img 
+                        class="h-40 mx-1" 
+                        src="https://placebear.com/200/300"
+                        _="on intersection(intersecting) having threshold 0.5
+                            if intersecting transition opacity to 1
+                            else transition opacity to 0" 
+                    />
+                {% endfor %}
+            </div>
+        </section>
+
+        <!-- Behavior Removable -->
+        <!-- _="install Removable(removeButton: me)" -->
+        <section class="mt-10 mb-4 bg-slate-100 p-10">
+            <h2 class="text-2xl mb-4 text-slate-600">Behavior Removable</h2>
+            <button 
+                id="close-banner"
+                _="install Removable(removeButton: #close-banner)"
+            >Click Me</button>
+        </section>
+
+        <!-- Draggable behavior -->
+        <section class="mt-10 mb-4 bg-slate-100 p-10">
+            <h2 class="text-2xl mb-4 text-slate-600">Draggable behavior (not working)</h2>
+            <div 
+                _="install Draggable(dragHandle: <h1/> in me)">
+                <h1>Drag Me!</h1>
+                <p>I am a draggable window!</p>
+            </div>
+        </section>
+
+    </div>
+</div>
+{% endblock %}
+
+
+
+{% block script_content %}
+
+{% endblock %}
+
+
+<!-- make a <button.btn-primary/>
+put the action into its textContent
+put it at end of #toolbar -->
+

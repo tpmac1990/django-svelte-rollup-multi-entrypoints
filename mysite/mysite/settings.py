@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'registration',
     'htmx_form',
     'alpine',
+    'hyperscript',
 ]
 
 MIDDLEWARE = [

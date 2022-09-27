@@ -11,6 +11,7 @@ module.exports = {
     "./mysite/registration/**/*.{html,js,svelte}",
     "./mysite/htmx_form/**/*.{html,js,svelte}",
     "./mysite/alpine/**/*.{html,js,svelte}",
+    "./mysite/hyperscript/**/*.{html,js,svelte}",
     // Error: both lines below cause an infinite reload loop
     // "./mysite/**/*.{html,js,svelte}",
     // "./mysite/*/src/*.svelte"
