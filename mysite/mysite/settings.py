@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'alpine',
     'hyperscript',
     'svelte_leaflet',
+    'svelte_demo',
     'htmx_fragments',
 ]
 

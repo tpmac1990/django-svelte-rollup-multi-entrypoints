@@ -12,7 +12,12 @@ module.exports = {
     "./mysite/htmx_form/**/*.{html,js,svelte}",
     "./mysite/alpine/**/*.{html,js,svelte}",
     "./mysite/hyperscript/**/*.{html,js,svelte}",
-    "./mysite/svelte_leaflet/**/*.{html,js,svelte}",
+    "./mysite/svelte_demo/**/*.{html,js,svelte}",
+    "./mysite/htmx_fragments/**/*.{html,js,svelte}",
+
+    // "./mysite/svelte_leaflet/**/*.{html,js,svelte}",
+    // "./mysite/svelte_leaflet_2/**/*.{html,js,svelte}",
+    // "./mysite/svelte_leaflet_migration/**/*.{html,js,svelte}",
     // Error: both lines below cause an infinite reload loop
     // "./mysite/**/*.{html,js,svelte}",
     // "./mysite/*/src/*.svelte"

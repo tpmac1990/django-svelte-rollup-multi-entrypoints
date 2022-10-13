@@ -8,6 +8,7 @@ import styles from "rollup-plugin-styles";
 import del from 'rollup-plugin-delete'
 import sveltePreprocess from 'svelte-preprocess';
 import outputManifest from 'rollup-plugin-output-manifest';
+import json from "@rollup/plugin-json";
 var path = require("path");
 
 const production = !process.env.ROLLUP_WATCH;
@@ -39,7 +40,10 @@ export default {
         main: path.resolve(__dirname, 'mysite/polls/src/main.js'),
         other: path.resolve(__dirname, 'mysite/other/src/other.js'),
 		sform: path.resolve(__dirname, 'mysite/sform/src/sform.js'),
-		leaflet: path.resolve(__dirname, 'mysite/svelte_leaflet/src/main.js'),
+		svelte_demo: path.resolve(__dirname, 'mysite/svelte_demo/src/main.js'),
+		// leaflet: path.resolve(__dirname, 'mysite/svelte_leaflet/src/main.js'),
+		// leaflet_2: path.resolve(__dirname, 'mysite/svelte_leaflet_2/src/main.js'),
+		// leaflet_migration: path.resolve(__dirname, 'mysite/svelte_leaflet_migration/src/main.js'),
 		// output: path.resolve(__dirname, 'mysite/common/src/output.css')
     },
     output: {
@@ -61,22 +65,22 @@ export default {
 			// This tells svelte to run some preprocessing
 			preprocess: sveltePreprocess({
 				postcss: true,  // And tells it to specifically run postcss!
-				babel: {
-					presets: [
-							[
-								"@babel/preset-env",
-								{
-									loose: true,
-									// No need for babel to resolve modules
-									modules: false,
-									targets: {
-										// ! Very important. Target es6+
-										esmodules: true,
-									},
-								},
-							],
-						],
-					},
+				// babel: {
+				// 	presets: [
+				// 			[
+				// 				"@babel/preset-env",
+				// 				{
+				// 					loose: true,
+				// 					// No need for babel to resolve modules
+				// 					modules: false,
+				// 					targets: {
+				// 						// ! Very important. Target es6+
+				// 						esmodules: true,
+				// 					},
+				// 				},
+				// 			],
+				// 		],
+				// 	},
 			}),
 		}),
 		// create a manifest file to match file names with their hash equivalents
@@ -98,6 +102,9 @@ export default {
 			dedupe: ['svelte']
 		}),
 		commonjs(),
+		
+		// Converts .json files to ES6 modules
+		json(),
 
 		// In dev mode, call `npm run start` once
 		// the bundle has been generated

@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+/* hide the default white square for DivIcon */
+.leaflet-div-icon {
+    width: 0 !important;
+    height: 0 !important;
+}
 
 html, body {
     position: relative;
