@@ -1,0 +1,19 @@
+<dl>
+    <dt>
+        first name
+    </dt>
+    <dd>
+        {{first_name}}
+    </dd>
+    <dt>
+        last name
+    </dt>
+    <dd>
+        {{last_name}}
+    </dd>
+</dl>
+<button
+    hx-get="{% url 'basic-form' %}"
+    hx-target="#name-section"
+    hx-swap="innerHTML"
+>Edit</button>

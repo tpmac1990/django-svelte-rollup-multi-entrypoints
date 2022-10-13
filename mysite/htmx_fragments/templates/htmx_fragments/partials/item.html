@@ -1,0 +1,9 @@
+<li class="h-16 border px-4 border-sky-700 mt-2">
+    <p class="float-left pt-5">{{item.name}}</p>
+    <button
+        class="float-right mt-3 text-white px-3 py-1 text-md bg-sky-800 hover:bg-slate-500"
+        hx-delete="{% url 'delete-item' item.id %}"
+        hx-target="closest li"
+		hx-swap="outerHTML"
+    >delete</button>
+</li>

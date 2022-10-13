@@ -1,0 +1,38 @@
+{% extends 'common/base_django.html' %}
+
+{% block body_content %}
+
+    <div class="container mx-auto my-6 pb-20 max-w-xl">
+        <h1 class="text-red-500 uppercase text-6xl font-thin my-4">HTMX fragments</h1>
+        
+        <div>
+
+            <section class="mt-10 mb-4 bg-slate-100 p-10">
+                <h2 class="text-2xl mb-4 text-slate-600">Form</h2>
+                <p class="mb-4">basic form updates with htmx</p>
+                <button
+                    class="text-white px-5 py-3 text-lg bg-sky-800 hover:bg-slate-500"
+                    hx-get="{% url 'form-fragment' %}"
+                    hx-swap="afterend"
+                >
+                    Load
+                </button>
+            </section>
+
+
+            <section class="mt-10 mb-4 bg-slate-100 p-10">
+                <h2 class="text-2xl mb-4 text-slate-600">Delete list elements</h2>
+                <p class="mb-4">removes list item with no other ui update</p>
+                <button
+                    class="text-white px-5 py-3 text-lg bg-sky-800 hover:bg-slate-500"
+                    hx-get="{% url 'item-list' %}"
+                    hx-swap="afterend"
+                >
+                    Load
+                </button>
+            </section>
+
+        </div>
+    </div>
+
+{% endblock %}
