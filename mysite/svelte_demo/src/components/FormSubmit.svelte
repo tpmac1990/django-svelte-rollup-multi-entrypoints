@@ -27,8 +27,6 @@
         hobbies = resp.hobbies
         console.log(resp.msg)
         formValues = hobby.form.initial
-        // bodyFormData = new FormData();
-        // bodyFormData.append('name', name);
     }
 
     async function deleteHandler(id){
@@ -43,8 +41,8 @@
 </script>
 
 <section class="mt-10 mb-4 bg-slate-100 p-10">
-	<h2 class="text-2xl mb-4 text-slate-600">Fetch data</h2>
-	<p>Use axios api to fetch data from django view</p>
+	<h2 class="text-2xl mb-4 text-slate-600">DjangoForm</h2>
+	<p>Use django form with svelte frontend. Extension of django form to convert to dict</p>
 	<button 
 		class="text-white px-5 py-3 mt-3 text-lg bg-sky-800 hover:bg-slate-500"
 		on:click={handleClick}
@@ -53,7 +51,10 @@
 	</button>
     {#if hobbyForm}
         <h2 class="text-xl pl-2 py-1">Hobby form</h2>
-        <form on:submit={handleFormSubmit}>
+        <form 
+            class="border border-1 border-sky-700 p-4"
+            on:submit={handleFormSubmit}
+        >
             {#each keys as key }
                 <label for="hobby-form-{key}" >{hobbyForm[key].label}</label>
                 {#if hobbyForm[key].input_type == 'text' }
@@ -63,7 +64,7 @@
                 {/if }
             {/each}
             <br>
-            <input type="submit" value="Submit" /> 
+            <input type="submit" value="Submit" class="text-white px-3 py-1 mt-3 text-lg bg-sky-600 hover:bg-slate-400" /> 
         </form>
     {/if}
     <br>

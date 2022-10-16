@@ -13,7 +13,7 @@
 <main class="container mx-auto my-6 pb-20 max-w-xl">
 	<h1 class="text-red-500 uppercase text-6xl font-thin my-4">Svelte demo</h1>
 
-	
+	<!-- need to add edit method -->
 	{#await import("./components/FormSubmit.svelte") then FormSubmit}
 		<FormSubmit.default />
 	{/await}
