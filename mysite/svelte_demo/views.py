@@ -4,8 +4,8 @@ from django.http import JsonResponse
 from django.middleware import csrf
 from django import forms
 from .models import Hobby
-import json
-# from django_remote_forms.forms import RemoteForm
+from .utils import JsonModelForm
+from django.shortcuts import get_object_or_404
 
 
 class SvelteDemos(View):
@@ -33,22 +33,33 @@ def clubs(request):
 
 
 
-# class HobbyForm(forms.ModelForm):
-#     class Meta:
-#         model = Hobby
-#         fields = '__all__'
+class HobbyForm(JsonModelForm):
+    class Meta:
+        model = Hobby
+        fields = '__all__'
 
 
-def hobbies(request):
+def hobbies(request, pk=None):
     if request.method == 'GET':
-        # I need to use drf serializer in stead of a form
-        pass
-        # form = HobbyForm()
-        # remote_form = RemoteForm(form)
-        # return JsonResponse(data={'form': remote_form.as_dict()})
+        if pk:
+            # pass initial values of an instance
+            hobby = get_object_or_404(Hobby, pk=pk)
+            form = HobbyForm(instance=hobby).to_dict()
+        else:
+            form = HobbyForm().to_dict()
+        hobbies = list(Hobby.objects.all().values())
+        return JsonResponse({'form': form, 'hobbies': hobbies})
 
-        # if I send values through, can I create a form like object on response in order to save it easily
-        # perhaps drf is a better option. I can't remember how to save it
-        # serializers.ModelSerializer: should be the way to go. use instead of ModelForm
+    elif request.method == 'POST':
+        form = HobbyForm(request.POST)
+        if form.is_valid():
+            form.save()
+            hobbies = list(Hobby.objects.all().values())
+            return JsonResponse({'msg': 'Successfully saved', 'hobbies': hobbies})
+        return JsonResponse({'msg': 'Error'})
 
+    elif request.method == 'DELETE':
+        hobby = get_object_or_404(Hobby, pk=pk)
+        hobby.delete()
+        return JsonResponse({'msg': 'Successfully deleted'})
 

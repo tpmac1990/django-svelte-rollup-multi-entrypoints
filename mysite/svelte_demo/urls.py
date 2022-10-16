@@ -8,5 +8,6 @@ urlpatterns = [
     path('', views.SvelteDemos.as_view(), name='svelte-demo-index'),
 
     path('clubs/', views.clubs, name='svelte-demo-clubs'),
-    path('hobbies/', views.hobbies, name='svelte-demo-hobbies')
+    path('hobbies/', views.hobbies, name='svelte-demo-hobbies'),
+    path('hobbies/<int:pk>/', views.hobbies, name='svelte-demo-hobbies-delete')
 ]

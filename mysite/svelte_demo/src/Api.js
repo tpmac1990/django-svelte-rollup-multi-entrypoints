@@ -9,7 +9,12 @@ const axiosAPI = axios.create({
 // implement a method to execute all the request from here.
 const apiRequest = (method, url, csrfToken, request) => {
     const headers = {
-      csrfmiddlewaretoken: csrfToken,
+      'X-CSRFToken': csrfToken,
+      "Content-Type": "multipart/form-data", // same as using "bodyFormData = new FormData();" in component
+      // csrfmiddlewaretoken: csrfToken, // I think this is used when passing the token in the body
+      // "Content-Type": "application/json",
+      // "Content-Type": "application/x-www-form-urlencoded"
+      // "Accept": "application/json",
     };
     //using the axios instance to perform the request that received from each http method
     return axiosAPI({

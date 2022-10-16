@@ -1,8 +1,11 @@
 <script>
 
+	import { setContext } from 'svelte';
+
 	import '../../common/src/styles.css';
 
 	export let csrfToken; // only here to hide error in console
+	setContext('csrfToken', {'csrfToken': csrfToken});
 
 </script>
 

@@ -1,9 +1,4 @@
-from xml.etree.ElementTree import Comment
 from django.db import models
-from django.forms import CharField
-
-# Create your models here.
-
 
 class Hobby(models.Model):
     name = models.CharField(max_length=100)
