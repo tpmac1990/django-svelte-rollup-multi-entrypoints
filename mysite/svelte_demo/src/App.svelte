@@ -12,22 +12,18 @@
 
 <main class="container mx-auto my-6 pb-20 max-w-xl">
 	<h1 class="text-red-500 uppercase text-6xl font-thin my-4">Svelte demo</h1>
-
-	<!-- need to add edit method -->
-	{#await import("./components/FormSubmit.svelte") then FormSubmit}
-		<FormSubmit.default />
-	{/await}
 	
-
-	<!-- {#await import("./components/LeafPolygon.svelte") then LeafPolygon}
-		<LeafPolygon.default />
-	{/await} -->
-
+	<!-- TODO -->
 	<!-- {#await import("./components/LeafMultiFeature.svelte") then LeafMultiFeature}
 		<LeafMultiFeature.default />
 	{/await} -->
 
-
+	
+	
+	<!-- need to add edit method -->
+	<!-- {#await import("./components/FormSubmit.svelte") then FormSubmit}
+		<FormSubmit.default />
+	{/await} -->
 
 	<!-- {#await import("./components/ApiCall.svelte") then ApiCall}
 		<ApiCall.default />
@@ -37,11 +33,11 @@
 		<LeafSvg.default />
 	{/await} -->
 
-	<!-- {#await import("./components/Leaflet.svelte") then Leaflet}
+	{#await import("./components/Leaflet.svelte") then Leaflet}
 		<Leaflet.default />
 	{/await}
 
-	{#await import("./components/Slot.svelte") then Slot}
+	<!-- {#await import("./components/Slot.svelte") then Slot}
 		<Slot.default />
 	{/await}
 
