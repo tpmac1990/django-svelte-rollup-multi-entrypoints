@@ -16,7 +16,7 @@ module.exports = {
     "./mysite/htmx_fragments/**/*.{html,js,svelte}",
 
     // "./mysite/svelte_leaflet/**/*.{html,js,svelte}",
-    // "./mysite/svelte_leaflet_2/**/*.{html,js,svelte}",
+    "./mysite/svelte_leaflet_2/**/*.{html,js,svelte}",
     // "./mysite/svelte_leaflet_migration/**/*.{html,js,svelte}",
     // Error: both lines below cause an infinite reload loop
     // "./mysite/**/*.{html,js,svelte}",

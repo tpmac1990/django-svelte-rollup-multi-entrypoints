@@ -1,0 +1,12 @@
+{% extends "common/base_svelte.html" %}
+{% load static hash_static %}
+
+{% block title %}Svelte Leaflet{% endblock %}
+
+{% block body_content %}
+
+   {% comment %} <script>window.props = {{ props|safe }};</script> {% endcomment %}
+
+   {% hash_static 'build/leaflet_2.js' %}
+
+{% endblock %}
