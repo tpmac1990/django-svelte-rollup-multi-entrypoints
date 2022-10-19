@@ -1,4 +1,5 @@
 <script>
+	import * as L from 'leaflet';
     import {LeafletMap, TileLayer} from 'svelte-leafletjs';
     import { onDestroy, onMount } from 'svelte';
     import { watchResize } from "svelte-watch-resize";
@@ -20,9 +21,13 @@
         attribution: "© OpenStreetMap contributors",
     };
 
+	const initialBounds = L.latLngBounds([50.513, 294.038], [22.918, 231.987]);
+
     const mapOptions = {
-        center: [1.364917, 103.822872],
-        zoom: 10,
+		center: [38, 263],
+        zoom: 5,
+		maxBounds: initialBounds,
+		minZoom: 4
     };
 
 	onDestroy(() => {
@@ -239,7 +244,7 @@
     >Resize map</button>
     <div class="grid grid-cols-{map_width}">
         <div class="h-[800px] w-full" use:watchResize={resizeMap}>
-            <LeafletMap bind:this={map} options={mapOptions}>
+            <LeafletMap bind:this={map} options={mapOptions} >
                 <TileLayer url={tileUrl} options={tileLayerOptions}/>
             </LeafletMap>
         </div>
