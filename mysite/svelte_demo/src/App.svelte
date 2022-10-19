@@ -33,9 +33,13 @@
 		<LeafSvg.default />
 	{/await} -->
 
-	{#await import("./components/Leaflet.svelte") then Leaflet}
-		<Leaflet.default />
+	{#await import("./components/LeafletAlt.svelte") then LeafletAlt}
+		<LeafletAlt.default />
 	{/await}
+
+	<!-- {#await import("./components/Leaflet.svelte") then Leaflet}
+		<Leaflet.default />
+	{/await} -->
 
 	<!-- {#await import("./components/Slot.svelte") then Slot}
 		<Slot.default />

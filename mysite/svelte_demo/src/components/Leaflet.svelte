@@ -1,11 +1,9 @@
 <script>
     import {LeafletMap, TileLayer} from 'svelte-leafletjs';
-    import { onDestroy } from 'svelte';
+    import { onDestroy, onMount } from 'svelte';
     import { watchResize } from "svelte-watch-resize";
     import MapMarker from './LeafletMapMarker.svelte'
     import MapPolygon from './LeafletMapPolygon.svelte'
-import App from '../App.svelte';
-import FormSubmit from './FormSubmit.svelte';
 
     let map;
 
@@ -46,6 +44,12 @@ import FormSubmit from './FormSubmit.svelte';
         popupMsg: "Sentosa",
         tooltipMsg: "Sentosa"
     }
+
+    onMount(() => {
+		console.log('help')
+	});
+    $: map, console.log(map)
+    
 </script>
 
 
