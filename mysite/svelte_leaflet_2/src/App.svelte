@@ -1,17 +1,241 @@
 <script>
+	import LeafletMap from './map/LeafletMap.svelte'
+	import MapControls from './MapControls.svelte'
+
+	import * as L from 'leaflet';
+    // import {LeafletMap, TileLayer} from 'svelte-leafletjs';
+    import { onDestroy, onMount } from 'svelte';
+    import { watchResize } from "svelte-watch-resize";
+	import { setContext } from 'svelte';
+
+	import * as topojson from 'topojson-client';
+	import { scaleSqrt } from 'd3-scale';
+	// import MapControls from './MapControls.svelte';
+
+	import topoData from '../data/topo.json';
+	import msaData from '../data/msas.json';
+	import flowsData from '../data/flows.json';
+
+	let map;
+	// show that we are getting the map fromo LeafletMap.svelte
+	$: map, console.log('map', map)
+
+	const initialBounds = L.latLngBounds([24, -126], [50, -66]);
+
+	const features = topojson.feature(topoData, 'msas');
+	console.log(features);
+
+	let geojsons = new Map();
+	for (let g of features.features) {
+	  	geojsons.set(g.properties.CBSAFP, g);
+	}
+
+	let msas = new Map();
+	for (let msa of msaData) {
+		let geojson = geojsons.get(msa.id);
+		let net = msa.totalIncoming - msa.totalOutgoing;
+  
+		msas.set(msa.id, {
+			...msa,
+			name: geojson.properties.NAME,
+			net,
+			netAsPercent: (100 * net) / msa.population,
+			feature: geojson,
+			outgoing: [],
+			incoming: [],
+		});
+	}
+
+	for (let [source, dest, count] of flowsData) {
+		let sourceMsa = msas.get(source);
+		let destMsa = msas.get(dest);
+		if (!sourceMsa || !destMsa) {
+			continue;
+		}
+	
+		if (count > 0) {
+			sourceMsa.outgoing.push({ id: dest, count });
+			destMsa.incoming.push({ id: source, count });
+		} else {
+			count = -count;
+			sourceMsa.incoming.push({ id: dest, count });
+			destMsa.outgoing.push({ id: source, count });
+		}
+	}
+
+	for (let msa of msas.values()) {
+		msa.outgoing.sort((a, b) => b.count - a.count);
+		msa.incoming.sort((a, b) => b.count - a.count);
+	}
+
+	console.log('msas', msas);
+
+	const sortSettings = {
+		all: {
+			sort: (a, b) => b.netAsPercent - a.netAsPercent,
+			limit: (list) => list,
+		},
+		largeNetPercent: {
+			sort: (a, b) => b.netAsPercent - a.netAsPercent,
+			limit: (list) => list.slice(0, 20).concat(list.slice(-20)),
+		},
+		largeNet: {
+			sort: (a, b) => b.net - a.net,
+			limit: (list) => list.slice(0, 20).concat(list.slice(-20)),
+		},
+	};
+
+	let filterSetting = 'all';
+	let activeMsas = [];
+	$: {
+		let sortedMsas = Array.from(msas.values()).sort(
+			sortSettings[filterSetting].sort
+		);
+		activeMsas = sortSettings[filterSetting].limit(sortedMsas);
+	}
+
+	let countField = 'netAsPercent';
+	$: colorBounds = activeMsas.reduce(
+		(acc, msa) => {
+			return {
+			min: Math.min(acc.min, msa[countField]),
+			max: Math.max(acc.max, msa[countField]),
+			};
+		},
+		{ min: Infinity, max: -Infinity }
+	);
+
+	$: posColorScale = scaleSqrt()
+		.domain([0, colorBounds.max])
+		.range(['hsl(30, 100%, 80%)', 'hsl(30, 100%, 30%)']);
+	$: negColorScale = scaleSqrt()
+		.domain([0, -colorBounds.min])
+		.range(['hsl(240, 100%, 80%)', 'hsl(240, 100%, 30%)']);
+  
+	$: netToColor = net => {
+		if (net > 0) {
+			return posColorScale(net);
+		} else if (net < 0) {
+			return negColorScale(-net);
+		} else {
+			return 'green';
+		}
+	};
+
+	let clickMsa
+	let hoverMsa
+  
+	let hoveringInList = false;
+	$: infoMsa = hoverMsa || clickMsa;
+	$: listMsa = hoveringInList ? clickMsa : infoMsa;
+  
+	let loaded = false;
+
+	function linesForMsa(map, msa, n) {
+		if (map || msa) {
+			return [];
+		}
+  
+		let centroidLatLng = L.latLng(msa.centroid[1], msa.centroid[0]);
+	
+		let incomingLines = msa.incoming.slice(0, n).map((flow) => {
+			let source = msas.get(flow.id);
+			let sourcePoint = L.latLng(source.centroid[1], source.centroid[0]);
+			let path = makeLineCoordinates(map, sourcePoint, centroidLatLng, true);
+			let percentOfMax = flow.count / msa.incoming[0].count;
+			return {
+				id: `${msa.id}:${source.id}`,
+				path,
+				color: 'hsl(30, 100%, 40%)',
+				animationSpeed: 1000 + (1 - percentOfMax) * 3000 + 'ms',
+			};
+		});
+  
+		let outgoingLines = msa.outgoing.slice(0, n).map((flow) => {
+			let dest = msas.get(flow.id);
+			let destPoint = L.latLng(dest.centroid[1], dest.centroid[0]);
+			let path = makeLineCoordinates(map, centroidLatLng, destPoint, false);
+			let percentOfMax = flow.count / msa.outgoing[0].count;
+			return {
+				id: `${dest.id}:${msa.id}`,
+				path,
+				color: 'blue',
+				animationSpeed: 1000 + (1 - percentOfMax) * 3000 + 'ms',
+			};
+		});
+  
+	  	return [...incomingLines, ...outgoingLines];
+	}
+
+	let topNFlows
+	let lines = [];
+	$: {
+		// getMap will sometimes not be set yet, so we have to check
+		// both for `map` and for `getMap` being set before trying to call it.
+		if (map) {
+				lines = [
+				...linesForMsa(map, clickMsa, topNFlows),
+				...(hoverMsa && hoverMsa !== clickMsa
+					? linesForMsa(map, hoverMsa, topNFlows)
+					: []),
+				];
+		}
+	}
+	$: lines, console.log('lines', lines)
+
+	$: hasLines = new Set(lines.flatMap((l) => l.id.split(':')));
+	let showLines = true;
+  
+	$: allShownMsas = Array.from(
+		new Set([...hasLines, ...activeMsas.map((m) => m.id)]),
+		(id) => msas.get(id)
+	);
+  
+</script>
+
+
+<section class="mt-10 mb-4 bg-slate-100 p-10">
+	<h2 class="text-2xl mb-4 text-slate-600">Leaflet</h2>
+	<p>create a leaflet map initially in a detached DOM (better method)</p>
+	<div class="grid grid-cols-1">
+		<LeafletMap bind:map={map}>
+			<MapControls
+					{initialBounds}
+					{msas}
+					{infoMsa}
+					bind:showLines
+					bind:topNFlows
+					bind:filterSetting />
+		</LeafletMap>
+	</div>
+</section>
+  
+  
+
+
+
+
+
+
+<!-- <script>
+	// https://stackoverflow.com/questions/62374265/svelte-with-leaflet
 	import * as L from 'leaflet';
     import {LeafletMap, TileLayer} from 'svelte-leafletjs';
     import { onDestroy, onMount } from 'svelte';
     import { watchResize } from "svelte-watch-resize";
+	import { setContext } from 'svelte';
 
 	import * as topojson from 'topojson-client';
 	import { scaleSqrt } from 'd3-scale';
+	import MapControls from './MapControls.svelte';
 
 	import topoData from '../data/topo.json';
 	import msaData from '../data/msas.json';
 	import flowsData from '../data/flows.json';
 
     let map;
+
+	setContext("leafletMapInstance", () => map);
 
     const tileUrl = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
     const tileLayerOptions = {
@@ -245,8 +469,14 @@
     <div class="grid grid-cols-{map_width}">
         <div class="h-[800px] w-full" use:watchResize={resizeMap}>
             <LeafletMap bind:this={map} options={mapOptions} >
-                <TileLayer url={tileUrl} options={tileLayerOptions}/>
+				<MapControls
+					{initialBounds}
+					{msas}
+					{infoMsa}
+					bind:showLines
+					bind:topNFlows
+					bind:filterSetting />
             </LeafletMap>
         </div>
     </div>
-</section>
+</section> -->
