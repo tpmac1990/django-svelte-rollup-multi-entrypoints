@@ -44,11 +44,6 @@
         popupMsg: "Sentosa",
         tooltipMsg: "Sentosa"
     }
-
-    onMount(() => {
-		console.log('help')
-	});
-    $: map, console.log(map)
     
 </script>
 
