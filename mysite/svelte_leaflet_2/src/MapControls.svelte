@@ -1,20 +1,21 @@
 <script>
-    // import * as L from 'leaflet';
+
     import Control from './map/Control.svelte';
     import { getContext } from 'svelte';
   
-    let map = getContext('leafletMapInstance');
-  
     export let initialBounds;
-    export let msas;
     export let infoMsa;
-  
     export let showLines = true;
     export let topNFlows = 5;
     export let filterSetting = 'all';
+
+    let map = getContext('leafletMapInstance');
+
 </script>
   
+
 <style lang="postcss">
+    /* styles the 'initial-bounds' & 'hide-lines' buttons at the top right of the map */
     button {
         @apply h-7 w-7 p-1 rounded transition-colors duration-200 text-gray-800 hover:bg-gray-200 hover:text-gray-600 border-gray-900;
     }
@@ -94,7 +95,7 @@
         class="border border-gray-600 px-4 py-2 bg-gray-200 bg-opacity-75">
         <table class="p-2">
             <tr class="py-2">
-            <td class="text-right pr-2">Name:</td>
+            <td class="text-right pr-2">Name: {{infoMsa}}</td>
             <td><strong>{infoMsa.name}</strong></td>
             </tr>
             <tr class="py-2">

@@ -1,11 +1,15 @@
 <script>
     import L from "leaflet";
     import { setContext, onMount } from "svelte";
+
+    export let initialBounds;
   
     let mapContainer;
     export let map = L.map(L.DomUtil.create("div"), {
-        center: [1.364917, 103.822872],
-        zoom: 10,
+        center: [35, -100],
+        zoom: 4,
+        maxBounds: initialBounds,
+        minZoom: 4,
     });
     setContext("leafletMapInstance", map);
   
@@ -23,6 +27,6 @@
 
 </script>
 
-<div class="w-full h-[800px]" bind:this="{mapContainer}">
-    <slot></slot>
+<div class="w-full h-[950px]" bind:this="{mapContainer}">
+    <slot {map} />
 </div>

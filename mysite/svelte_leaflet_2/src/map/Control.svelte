@@ -1,7 +1,6 @@
 <script context="module">
     import * as L from 'leaflet';
     class Control extends L.Control {
-        // el;
         constructor(
             el,
             position
@@ -17,8 +16,6 @@
         onRemove() {}
     }
 
-    // TODO: I need to add onDestroy 
-
 </script>
 
 
@@ -31,12 +28,17 @@
   
     export let position;
     /** The control instance created by this component */
-    export let control;
+    let control;
   
     let map = getContext('leafletMapInstance');
     function createControl(container) {
         control = new Control(container, position).addTo(map);
     }
+
+    onDestroy(() => {
+		if (control) control.remove();
+	});
+
 </script>
   
 <div class="hidden">
