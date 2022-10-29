@@ -54,7 +54,6 @@ INSTALLED_APPS = [
     'hyperscript',
     'svelte_leaflet',
     'svelte_leaflet_2',
-    # 'svelte_leaflet_migration',
     'svelte_demo',
     'htmx_fragments',
 ]

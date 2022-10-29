@@ -33,7 +33,6 @@ urlpatterns = [
     path('svelte-demo/', include('svelte_demo.urls')),
     path('svelte-leaflet/', include('svelte_leaflet.urls')),
     path('svelte-leaflet-2/', include('svelte_leaflet_2.urls')),
-    path('svelte-leaflet-migration/', include('svelte_leaflet_migration.urls')),
     path('admin/', admin.site.urls),
     path("__reload__/", include("django_browser_reload.urls")), # live-reload for django templates
     path('__debug__/', include('debug_toolbar.urls')),
