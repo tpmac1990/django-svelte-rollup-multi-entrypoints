@@ -23,7 +23,6 @@ urlpatterns = [
     path('registration/', include('registration.urls')),
     path('polls/', include('polls.urls')),
     path('other/', include('other.urls')),
-    path('sform/', include('sform.urls')),
     path('htmx-todo/', include('htmx_todo.urls')),
     path('htmx-lookup/', include('htmx_lookup.urls')),
     path('htmx-form/', include('htmx_form.urls')),

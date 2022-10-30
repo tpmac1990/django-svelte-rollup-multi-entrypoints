@@ -39,7 +39,6 @@ export default {
 	input: {
         main: path.resolve(__dirname, 'mysite/polls/src/main.js'),
         other: path.resolve(__dirname, 'mysite/other/src/other.js'),
-		sform: path.resolve(__dirname, 'mysite/sform/src/sform.js'),
 		svelte_demo: path.resolve(__dirname, 'mysite/svelte_demo/src/main.js'),
 		// leaflet: path.resolve(__dirname, 'mysite/svelte_leaflet/src/main.js'),
 		leaflet_2: path.resolve(__dirname, 'mysite/svelte_leaflet_2/src/main.js'),

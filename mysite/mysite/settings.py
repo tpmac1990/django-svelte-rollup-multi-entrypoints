@@ -45,7 +45,6 @@ INSTALLED_APPS = [
     'django_htmx',
     'other',
     'common',
-    'sform',
     'htmx_todo',
     'htmx_lookup',
     'registration',

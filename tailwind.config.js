@@ -3,7 +3,6 @@ module.exports = {
   content: [
     // "./mysite/polls/src/*.{html,js,svelte}",
     "./mysite/other/**/*.{html,js,svelte}",
-    "./mysite/sform/**/*.{html,js,svelte}",
     "./mysite/polls/**/*.{html,js,svelte}",
     "./mysite/htmx_todo/**/*.{html,js,svelte}",
     "./mysite/htmx_lookup/**/*.{html,js,svelte}",
