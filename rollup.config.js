@@ -63,22 +63,18 @@ export default {
 			// This tells svelte to run some preprocessing
 			preprocess: sveltePreprocess({
 				postcss: true,  // And tells it to specifically run postcss!
-				// babel: {
-				// 	presets: [
-				// 			[
-				// 				"@babel/preset-env",
-				// 				{
-				// 					loose: true,
-				// 					// No need for babel to resolve modules
-				// 					modules: false,
-				// 					targets: {
-				// 						// ! Very important. Target es6+
-				// 						esmodules: true,
-				// 					},
-				// 				},
-				// 			],
-				// 		],
-				// 	},
+				babel: {
+					presets: [
+							[
+								'@babel/preset-env',
+								{
+									targets: {
+										node: 'current'
+									}
+								}
+							]
+						],
+					},
 			}),
 		}),
 		// create a manifest file to match file names with their hash equivalents
