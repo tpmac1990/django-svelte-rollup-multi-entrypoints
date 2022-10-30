@@ -13,18 +13,12 @@
 
 </script>
   
-
-<style lang="postcss">
-    /* styles the 'initial-bounds' & 'hide-lines' buttons at the top right of the map */
-    button {
-        @apply h-7 w-7 p-1 rounded transition-colors duration-200 text-gray-800 hover:bg-gray-200 hover:text-gray-600 border-gray-900;
-    }
-</style>
   
 <Control
     position="topright"
     class="p-2 border border-black bg-white flex space-x-2 shadow-xl">
     <button
+        class="h-7 w-7 p-1 rounded transition-colors duration-200 text-gray-800 hover:bg-gray-200 hover:text-gray-600 border-gray-900"
         title="Zoom out to entire country"
         type="button"
         on:click={() => map.fitBounds(initialBounds)}>
@@ -39,7 +33,7 @@
         </svg>
     </button>
     <button
-        class:border={showLines}
+        class="h-7 w-7 p-1 rounded transition-colors duration-200 text-gray-800 hover:bg-gray-200 hover:text-gray-600 border-gray-900"
         type="button"
         title="Show lines"
         on:click={() => (showLines = !showLines)}>
