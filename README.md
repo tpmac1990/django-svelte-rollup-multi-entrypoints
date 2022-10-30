@@ -145,9 +145,24 @@ Uses: Alpine
 demonstrates: events, transitions, state, masks
 
 
+## Svelte leaflet
 
+### Links
+docs: `https://alpinejs.dev/`
+tut: `https://www.youtube.com/watch?v=r5iWCtfltso`
+mask plugin: `https://alpinejs.dev/plugins/mask`
 
-
+### Summary
+markers & lines app: `https://svelte.dev/repl/62271e8fda854e828f26d75625286bc3?version=3.50.1`
+markers & lines app 2: `https://svelte.dev/repl/36a84bbe2cf74c899ada6380e6e632d8?version=3.29.7`
+leaflet / svelte hackbuddy demo: `https://www.youtube.com/watch?v=-klB-EocorE&t=770s`
+leaflet / svelte hackbuddy demo repo: `https://github.com/dimfeld/svelte-leaflet-demo/blob/master/full/src/App.svelte`
+danial imfeld twitter: `https://twitter.com/dimfeld`
+loading leaflet using onMount example: `https://dev.to/khromov/using-leaflet-with-sveltekit-3jn1`
+leaflet / svelte with get/setcontext: `https://stackoverflow.com/questions/62374265/svelte-with-leaflet`
+`https://gis.stackexchange.com/questions/302180/leaflet-invalidate-size-is-not-a-function-undefined`
+svelte-leaflet docs: `https://ngyewch.github.io/svelte-leaflet/components/Popup`
+my react-leaflet example: `https://github.dev/tpmac1990/atlas-prod/blob/main/src/components/map/MapContent.js`
 
 
 
