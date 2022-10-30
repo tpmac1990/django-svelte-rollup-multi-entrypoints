@@ -1,7 +1,7 @@
 import svelte from 'rollup-plugin-svelte';
 import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
-import livereload from 'rollup-plugin-livereload';
+// import livereload from 'rollup-plugin-livereload';
 import { terser } from 'rollup-plugin-terser';
 // import css from 'rollup-plugin-css-only';
 import styles from "rollup-plugin-styles";
@@ -111,7 +111,8 @@ export default {
 
 		// Watch the `public` directory and refresh the
 		// browser on changes when not in production
-		!production && livereload(public_dir),
+		// NOTE: no need for livereload as django_browser_reload will trigger a reload on change.
+		// !production && livereload(public_dir),
 
 		// If we're building for production (npm run build
 		// instead of npm run dev), minify
