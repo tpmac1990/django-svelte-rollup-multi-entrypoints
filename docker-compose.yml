@@ -1,0 +1,88 @@
+version: '3.9'
+
+services:
+  app:
+    image: app_image
+    container_name: app
+    restart: always
+    build:
+      context: .
+    command: >
+      sh -c "python manage.py wait_for_db &&
+             python manage.py migrate &&
+             python manage.py runserver 0.0.0.0:8000"
+    ports:
+      - 8000:8000
+    volumes:
+      - ./mysite:/mysite
+      - ./data/web:/vol/web
+    environment:
+      - SECRET_KEY=devsecretkey
+      - DEBUG=1
+      - DB_HOST=db
+      - DB_NAME=devdb
+      - DB_USER=devuser
+      - DB_PASS=changeme
+      - ALLOWED_HOSTS=*
+      - ELASTICSEARCH_DSL_HOSTS=es:9200
+    depends_on:
+      - db
+      - es
+
+  node:
+    container_name: node
+    restart: always
+    build:
+      context: .
+      dockerfile: node.Dockerfile
+    command: >
+      sh -c "npm run dev"
+    volumes:
+      - ./mysite:/mysite
+    depends_on:
+      - app
+
+  db:
+    image: postgres:13-alpine
+    container_name: db
+    restart: always
+    environment:
+      - POSTGRES_DB=devdb
+      - POSTGRES_USER=devuser
+      - POSTGRES_PASSWORD=changeme
+    ports:
+      - "5432:5432"
+
+  redis:
+    image: redis:alpine
+    container_name: redis
+
+  celery:
+    restart: always
+    container_name: celery
+    # use the image from above so build process is only run once. instead of build context .
+    image: app_image
+    command: celery -A mysite worker -l info
+    volumes:
+      - ./app:/app
+    environment:
+      - SECRET_KEY=devsecretkey
+      - DEBUG=1
+      - DB_HOST=db
+      - DB_NAME=devdb
+      - DB_USER=devuser
+      - DB_PASS=changeme
+    depends_on:
+      - db
+      - redis
+      - app
+
+  es:
+    image: elasticsearch:7.8.1
+    restart: always
+    container_name: es
+    environment:
+      - discovery.type=single-node
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ports:
+      - "9200:9200"
