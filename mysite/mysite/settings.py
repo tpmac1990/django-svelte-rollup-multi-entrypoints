@@ -200,3 +200,12 @@ if not DEBUG:
     # AWS_S3_ENDPOINT_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}"
     # AWS_LOCATION = "static"
     # STATIC_URL = f"{AWS_S3_ENDPOINT_URL}/{AWS_LOCATION}/"
+
+
+# this is required along with launch.json & mapping port 3000 in docker-compose to enable vs-code debugger
+if DEBUG:
+    if os.environ.get('RUN_MAIN') or os.environ.get('WERKZEUG_RUN_MAIN'):
+        import debugpy
+        debugpy.listen(("0.0.0.0", 3000))
+        # debugpy.wait_for_client() # causes app to hang
+        print('Attached!')
