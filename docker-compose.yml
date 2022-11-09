@@ -14,8 +14,8 @@ services:
     ports:
       - 8000:8000
       - 3000:3000 # debugging service (debugpy)
-    # stdin_open: true
-    # tty: true
+    stdin_open: true
+    tty: true
     env_file:
       - .env
     volumes:

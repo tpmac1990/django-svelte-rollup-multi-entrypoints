@@ -22,6 +22,83 @@ This template tag uses the manifest.json file to lookup the equivalent js hash f
 rollup-plugin-output-manifest: `https://github.com/shuizhongyueming/rollup-plugin-output-manifest/tree/master/packages/main`
 rollup-plugin-styles: `https://www.npmjs.com/package/rollup-plugin-styles`
 
+### TODO
+1. make image app to show how to deal with media (s3)
+2. make elastic search app
+3. setup postgis
+4. minimise css
+5. figure out deployment
+6. testing
+
+## s3 media file storage
+`https://www.youtube.com/watch?v=nzLMA9WZqMM`
+`https://stackoverflow.com/questions/67285752/django-static-files-uploaded-to-folder-in-amazon-s3-that-cant-be-found`
+`https://django-storages.readthedocs.io/en/latest/`
+`https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html`
+
+## Python debugging in Docker container
+There are two methods for debugging:
+1. pdb
+2. vs-code debugging
+
+### pdb
+use `import pdb; pdb.set_trace()` to insert a breakpoint in python code. Start the server with `docker-compose up`, then in a separate terminal run `docker attach app` with app being the container name. This terminal will allow interaction with the debugger.
+It should also be possible to use `run` with `docker-compose run --rm app`, but I haven't tested this.
+To make this function, I added the following to docker-compose:
+```
+stdin_open: true
+tty: true
+```
+`breakpoint()` does not work. I am still trying to figure out why.
+
+### vs-code debugging
+Start the server with `docker-compose up`.
+Place a `red-dot` debugger marker on the line of python code to inspect, then start the debugger with `Run > start debugger`. It should also be possible to start it with `F5`, but it doesn't work yet. Run the code and it will pause at the breakpoint. The debug panel on the left will show all active variables and the `DEBUG CONSOLE` in the terminal will allow you to interact using python.
+To make this function, I added the following:
+requirements.txt:
+```
+debugpy==1.6.3
+```
+docker-compose.yml
+```
+ports:
+    - 3000:3000 
+```
+settings.py
+```
+# I have also seen this placed in manage.py 
+if DEBUG:
+    if os.environ.get('RUN_MAIN') or os.environ.get('WERKZEUG_RUN_MAIN'):
+        import debugpy
+        debugpy.listen(("0.0.0.0", 3000))
+```
+launch.json
+```
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Run Django",
+            "type": "python",
+            "request": "attach", # attach to a existing docker container
+            "pathMappings": [
+                {
+                    "localRoot": "${workspaceFolder}/mysite",
+                    "remoteRoot": "/mysite"
+                } # get these values from docker-compose volumes: - ./mysite:/mysite
+            ],
+            "port": 3000,
+            "host": "127.0.0.1",
+        }
+    ]
+}
+```
+
+Links:
+`https://testdriven.io/blog/django-debugging-vs-code/`
+`https://stackoverflow.com/questions/55956715/how-to-run-pdb-inside-a-docker-container`
+`https://github.com/Microsoft/PTVS/issues/1057#issuecomment-421549892`
+`https://medium.com/djangotube/dajngo-docker-compose-with-postgres-and-vs-code-debug-example-4875c6666674`
 
 
 
@@ -36,6 +113,12 @@ run svelte server:
 `npm run dev`
 
 
+
+## Run dev with Docker
+`docker-compose build`
+`docker-compose up`
+This will start the svelte server, but it is slow. For quicker development comment out the node container in docker-compose.yml
+and start the node server locally with `npm run dev`
 
 
 
