@@ -1,6 +1,7 @@
-from django.http import HttpResponse, HttpResponseForbidden, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseForbidden
 from django.shortcuts import render
-from .forms import NameForm
+from .forms import NameForm, ImageForm
+from .models import Image
 
 
 def item_list(request):
@@ -40,3 +41,21 @@ def basic_form(request):
     form = NameForm()
 
     return render(request, 'htmx_fragments/form_templates/form.html', {'form': form})
+
+
+def img_app(request):
+
+    if request.method == 'POST':
+        form = ImageForm(request.POST, request.FILES)
+        
+        if form.is_valid():
+            form.save()
+        else:
+            HttpResponseForbidden()
+
+    context = {
+        "images": Image.objects.all(),
+        "form": ImageForm()
+    }
+
+    return render(request, 'htmx_fragments/partials/images.html', context)

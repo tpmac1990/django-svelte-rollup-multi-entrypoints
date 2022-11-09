@@ -1,0 +1,21 @@
+<div id="img-form">
+    <form 
+        hx-post="{% url 'img-app' %}"
+        hx-swap="outerHTML"
+        hx-target="#img-form"
+        hx-encoding="multipart/form-data"
+    >
+        {{form}}
+        <input type="submit" value="Submit">
+    </form>
+
+    {% if images %}
+        <div class="grid grid-cols-3 gap-1">
+            {% for img in images %}
+                <img class="w-32" src="{{ img.image.url }}" alt="{{img.title}}">
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>There are no images.</p>
+    {% endif %}
+</div>
