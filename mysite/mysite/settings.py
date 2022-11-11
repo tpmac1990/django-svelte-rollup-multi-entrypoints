@@ -55,6 +55,8 @@ INSTALLED_APPS = [
     'svelte_leaflet_2',
     'svelte_demo',
     'htmx_fragments',
+    'crispy_forms',
+    'crispy_tailwind',
 ]
 
 MIDDLEWARE = [
@@ -209,3 +211,8 @@ if DEBUG:
         debugpy.listen(("0.0.0.0", 3000))
         # debugpy.wait_for_client() # causes app to hang
         print('Attached!')
+
+
+# Crispy forms
+CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
+CRISPY_TEMPLATE_PACK = "tailwind"

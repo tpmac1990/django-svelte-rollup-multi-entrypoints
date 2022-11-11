@@ -23,7 +23,7 @@ rollup-plugin-output-manifest: `https://github.com/shuizhongyueming/rollup-plugi
 rollup-plugin-styles: `https://www.npmjs.com/package/rollup-plugin-styles`
 
 ### TODO
-1. make image app to show how to deal with media (s3)
+1. make image app to show how to deal with media (s3) - delete images, set image quality and size
 2. make elastic search app
 3. setup postgis
 4. minimise css
@@ -35,6 +35,33 @@ rollup-plugin-styles: `https://www.npmjs.com/package/rollup-plugin-styles`
 `https://stackoverflow.com/questions/67285752/django-static-files-uploaded-to-folder-in-amazon-s3-that-cant-be-found`
 `https://django-storages.readthedocs.io/en/latest/`
 `https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html`
+
+## Styling django-forms
+As django handles the html for forms `{{form}}`, it isn't possible to add tailwind styles as usual. The following packages were used:
+python:
+django-crispy-forms
+crispy-tailwind
+node:
+npm install @tailwindcss/forms
+
+use: `{{form|crispy}}`
+
+I followed this blog: `https://www.accordbox.com/blog/render-django-form-with-tailwind-css-style/`
+Everything seems to be working correctly, but adding the python packages to the tailwind.config.js file doesn't add anything to the bundle.css file. I'm not sure why this is.
+
+For styling within django forms module:
+within the Meta class:
+```
+widgets = {
+    'title': forms.TextInput(attrs={
+        'class': '',
+        'placeholder': 'Title',
+        'style': 'background-color: white;'
+        }),
+}
+```
+`https://medium.com/swlh/how-to-style-your-django-forms-7e8463aae4fa`
+
 
 ## Python debugging in Docker container
 There are two methods for debugging:

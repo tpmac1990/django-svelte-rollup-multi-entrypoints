@@ -1,3 +1,5 @@
+{% load crispy_forms_tags %}
+
 <div id="img-form">
     <form 
         hx-post="{% url 'img-app' %}"
@@ -5,7 +7,7 @@
         hx-target="#img-form"
         hx-encoding="multipart/form-data"
     >
-        {{form}}
+        {{ form|crispy }}
         <input type="submit" value="Submit">
     </form>
 

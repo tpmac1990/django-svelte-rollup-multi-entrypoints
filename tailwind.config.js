@@ -1,4 +1,7 @@
 /** @type {import('tailwindcss').Config} */
+// const Path = require("path");
+// const pySitePackages = process.env.pySitePackages;
+
 module.exports = {
   content: [
     // "./mysite/polls/src/*.{html,js,svelte}",
@@ -19,6 +22,10 @@ module.exports = {
     // Error: both lines below cause an infinite reload loop
     // "./mysite/**/*.{html,js,svelte}",
     // "./mysite/*/src/*.svelte"
+
+    // This isn't adding anything extra to the css file. 
+    // "./venv/lib/crispy_tailwind/**/*.{html,py,js}"
+    // pySitePackages + "crispy_tailwind/**/*.{html,py,js}",
   ],
   theme: {
     extend: {
@@ -39,5 +46,7 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/forms'),
+  ],
 }
