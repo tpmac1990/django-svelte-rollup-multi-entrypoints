@@ -62,6 +62,17 @@ widgets = {
 ```
 `https://medium.com/swlh/how-to-style-your-django-forms-7e8463aae4fa`
 
+## Imagekit
+ResizeToFit(width=250,height=100,upscale=False,mat_color='#efefef',anchor=Anchor.CENTER), # will not crop
+2400 x 1600 large screen
+1920 x 1080 background image
+1024 X 768 header image
+250 x 100 logo
+upscale=True, mat_color=None, anchor=Anchor.CENTER
+ResizeToFill(200,180) # will crop, looses dimensions
+SmartResize(200,180) # will crop, looses dimensions
+Resize(200,180) # distorts image
+
 
 ## Python debugging in Docker container
 There are two methods for debugging:

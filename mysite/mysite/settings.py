@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'htmx_fragments',
     'crispy_forms',
     'crispy_tailwind',
+    'imagekit',
 ]
 
 MIDDLEWARE = [
