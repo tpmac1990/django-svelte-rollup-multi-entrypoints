@@ -62,15 +62,14 @@ def img_app(request):
     return render(request, 'htmx_fragments/partials/images.html', context)
 
 
+def img_app_init(request, pk):
+    img = Image.objects.get(pk=pk)
+    return render(request, 'htmx_fragments/partials/image_large.html', {'img': img})
+
 def img_app_prev(request, pk):
     img = Image.objects.filter(id__lt=pk).order_by('id').last()
     return render(request, 'htmx_fragments/partials/image_large.html', {'img': img})
-    # html = render_block_to_string('htmx_fragments/partials/images.html', 'lg-img', {'img': img})
-    # return HttpResponse(html)
-
 
 def img_app_next(request, pk):
     img = Image.objects.filter(id__gt=pk).order_by('id').first()
     return render(request, 'htmx_fragments/partials/image_large.html', {'img': img})
-    # html = render_block_to_string('htmx_fragments/partials/images.html', 'lg-img', {'img': img})
-    # return HttpResponse(html)

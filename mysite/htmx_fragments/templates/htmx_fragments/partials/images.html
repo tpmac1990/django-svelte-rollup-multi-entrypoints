@@ -12,47 +12,24 @@
         <input type="submit" value="Submit">
     </form>
 
-    <div id="img-section" class="w-full h-96">
+    <div id="img-section" class="w-full h-96 relative">
         {% if images %}
             <div class="grid grid-cols-3 gap-1 relative">
                 {% for img in images %}
                     <div
-                        _="on click 
-                            remove .hidden from #img-lg-{{img.pk}} then
-                            transition #img-lg-{{img.pk}}'s opacity from 0 to 1 over 300ms then
-                            wait 300ms then
-                            remove .hidden from .wait-to-show"
+                        hx-get="{% url 'img-app-init' img.pk %}"
+                        hx-swap="innerHTML"
+                        hx-target="#img-lg"
+                        _="on click remove .hidden from #img-lg"
                     >
                         {% generateimage 'common:grid_image' source=img.image -- alt="{{img.title}}" class="border-4 border-white" %}
                     </div>
-
-                    <div 
-                        id="img-lg-{{img.pk}}" 
-                        class="flex w-full h-96 hidden absolute opacity-0 bg-opacity-80 z-10 bg-black"
-                    >
-                        <span
-                            hx-get="{% url 'img-app-prev' img.pk %}"
-                            hx-swap="outerHTML" 
-                            hx-target="#img-lg-{{img.pk}}"
-                            _="on click from #img-box-{{img.pk}} "
-                            class="wait-to-show hidden my-auto ml-5 text-4xl font-bold text-white float-left"><</span>
-                        {% generateimage 'common:slide_image' source=img.image -- alt="{{img.title}}" class="m-auto" %}
-                        <span 
-                            hx-get="{% url 'img-app-next' img.pk %}"
-                            hx-swap="outerHTML" 
-                            hx-target="#img-lg-{{img.pk}}"
-                            class="wait-to-show hidden my-auto mr-5 text-4xl font-bold text-white float-right">></span>
-                        <span 
-                            class="wait-to-show hidden text-4xl font-bold text-white absolute right-0 mr-5 hover:cursor-pointer"
-                            _="on click 
-                                transition #img-lg-{{img.pk}}'s opacity from 1 to 0 over 300ms then
-                                add .hidden to .wait-to-show then
-                                add .hidden to #img-lg-{{img.pk}}"
-                        >x</span>
-                    </div>
-
                 {% endfor %}
             </div>
+            <div 
+                id="img-lg" 
+                class="hidden opacity-100 top-0 flex w-full h-96 absolute bg-opacity-80 z-10 bg-black"
+            ></div>
         {% else %}
             <p>There are no images.</p>
         {% endif %}

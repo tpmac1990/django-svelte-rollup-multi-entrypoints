@@ -1,26 +1,16 @@
 {% load imagekit %}
 
-<div 
-    id="img-lg-{{img.pk}}" 
-    class="flex w-full h-96 absolute opacity-100 bg-opacity-80 z-10 bg-black"
->
-    <span
-        hx-get="{% url 'img-app-prev' img.pk %}"
-        hx-swap="outerHTML" 
-        hx-target="#img-lg-{{img.pk}}"
-        _="on click from #img-box-{{img.pk}} "
-        class="wait-to-show my-auto ml-5 text-4xl font-bold text-white float-left"><</span>
-    {% generateimage 'common:slide_image' source=img.image -- alt="{{img.title}}" class="m-auto" %}
-    <span 
-        hx-get="{% url 'img-app-next' img.pk %}"
-        hx-swap="innerHTML" 
-        hx-target="#img-lg-{{img.pk}}"
-        class="wait-to-show my-auto mr-5 text-4xl font-bold text-white float-right">></span>
-    <span 
-        class="wait-to-show text-4xl font-bold text-white absolute right-0 mr-5 hover:cursor-pointer"
-        _="on click 
-            transition #img-lg-{{img.pk}}'s opacity from 1 to 0 over 300ms then
-            add .hidden to .wait-to-show then
-            add .hidden to #img-lg-{{img.pk}}"
-    >x</span>
-</div>
+<span
+    hx-get="{% url 'img-app-prev' img.pk %}"
+    hx-swap="innerHTML" 
+    hx-target="#img-lg"
+    class="my-auto ml-5 text-4xl font-bold text-white float-left"><</span>
+{% generateimage 'common:slide_image' source=img.image -- alt="{{img.title}}" class="m-auto" %}
+<span 
+    hx-get="{% url 'img-app-next' img.pk %}"
+    hx-swap="innerHTML" 
+    hx-target="#img-lg"
+    class="my-auto mr-5 text-4xl font-bold text-white float-right">></span>
+<span 
+    class="text-4xl font-bold text-white absolute right-0 mr-5 hover:cursor-pointer"
+>x</span>
