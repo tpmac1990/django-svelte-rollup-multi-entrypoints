@@ -8,6 +8,19 @@
     height: 0 !important;
 }
 
+/* styles the custom file upload button */
+/* input[type='file'] {
+    display: none;
+}
+.custom-file-upload {
+    position: absolute;
+    display: block;
+    width: 200px;
+    padding: 5px 3px;
+    border: 1px solid black;
+    background-color: #99f6e4;
+} */
+
 html, body {
     position: relative;
     width: 100%;
