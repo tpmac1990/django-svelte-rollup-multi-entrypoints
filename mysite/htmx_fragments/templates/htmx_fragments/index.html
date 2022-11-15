@@ -34,8 +34,11 @@
 
 
             <section class="mt-10 mb-4 bg-slate-100 p-10">
-                <h2 class="text-2xl mb-4 text-slate-600">Upload Images</h2>
-                <p class="mb-4">create, delete & display images</p>
+                <h2 class="text-2xl mb-4 text-slate-600">Upload and view images</h2>
+                <p class="mb-4">
+                    add images. Uses htmx, hyperscript & imagekit. Click 
+                    on grid image to reveal larger image.
+                </p>
                 <button
                     class="text-white px-5 py-3 text-lg bg-sky-800 hover:bg-slate-500"
                     hx-get="{% url 'img-app' %}"

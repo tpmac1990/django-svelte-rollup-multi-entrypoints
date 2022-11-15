@@ -1,16 +1,25 @@
 {% load imagekit %}
 
-<span
-    hx-get="{% url 'img-app-prev' img.pk %}"
-    hx-swap="innerHTML" 
-    hx-target="#img-lg"
-    class="my-auto ml-5 text-4xl font-bold text-white float-left"><</span>
+{% if has_previous %}
+    <span
+        hx-get="{% url 'img-app-prev' img.pk %}"
+        hx-swap="innerHTML" 
+        hx-target="#img-lg"
+        class="my-auto ml-5 text-4xl font-bold text-white float-left"><</span>
+{% else %}
+    <span class="my-auto ml-5 text-4xl font-bold text-gray float-left"><</span>
+{% endif %}
 {% generateimage 'common:slide_image' source=img.image -- alt="{{img.title}}" class="m-auto" %}
-<span 
-    hx-get="{% url 'img-app-next' img.pk %}"
-    hx-swap="innerHTML" 
-    hx-target="#img-lg"
-    class="my-auto mr-5 text-4xl font-bold text-white float-right">></span>
+{% if has_next %}
+    <span 
+        hx-get="{% url 'img-app-next' img.pk %}"
+        hx-swap="innerHTML" 
+        hx-target="#img-lg"
+        class="my-auto mr-5 text-4xl font-bold text-white float-right">></span>
+{% else %}
+    <span class="my-auto ml-5 text-4xl font-bold text-gray float-left">></span>
+{% endif %}
 <span 
     class="text-4xl font-bold text-white absolute right-0 mr-5 hover:cursor-pointer"
+    _="on click add .hidden to #img-lg"
 >x</span>
