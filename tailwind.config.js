@@ -1,32 +1,34 @@
 /** @type {import('tailwindcss').Config} */
-// const Path = require("path");
-// const pySitePackages = process.env.pySitePackages;
+
+function content() {
+  apps = [
+    "alpine",
+    "common",
+    "htmx_form",
+    "htmx_fragments",
+    "htmx_lookup",
+    "htmx_todo",
+    "hyperscript",
+    "images",
+    "other",
+    "polls",
+    "registration",
+    "svelte_demo",
+    "svelte_leaflet",
+    "svelte_leaflet_2",
+  ]
+  return apps.map(app => `./mysite/${ app }/**/*.{html,js,svelte}`)
+  // It would be easier to use the below line, but it throws an infinite reload loop. I think it is related to 
+  //  the svelte/public directory where the css file is built
+  // "./mysite/**/*.{html,js,svelte}",
+  // crispy / tailwind_forms suggest this is required. But it doesn't seem to be adding anything 
+  // "./venv/lib/crispy_tailwind/**/*.{html,py,js}"
+  // pySitePackages + "crispy_tailwind/**/*.{html,py,js}",
+}
+
 
 module.exports = {
-  content: [
-    // "./mysite/polls/src/*.{html,js,svelte}",
-    "./mysite/other/**/*.{html,js,svelte}",
-    "./mysite/polls/**/*.{html,js,svelte}",
-    "./mysite/htmx_todo/**/*.{html,js,svelte}",
-    "./mysite/htmx_lookup/**/*.{html,js,svelte}",
-    "./mysite/common/**/*.{html,js,svelte}",
-    "./mysite/registration/**/*.{html,js,svelte}",
-    "./mysite/htmx_form/**/*.{html,js,svelte}",
-    "./mysite/alpine/**/*.{html,js,svelte}",
-    "./mysite/hyperscript/**/*.{html,js,svelte}",
-    "./mysite/svelte_demo/**/*.{html,js,svelte}",
-    "./mysite/htmx_fragments/**/*.{html,js,svelte}",
-
-    // // "./mysite/svelte_leaflet/**/*.{html,js,svelte}",
-    "./mysite/svelte_leaflet_2/**/*.{html,js,svelte}",
-    // Error: both lines below cause an infinite reload loop
-    // "./mysite/**/*.{html,js,svelte}",
-    // "./mysite/*/src/*.svelte"
-
-    // This isn't adding anything extra to the css file. 
-    // "./venv/lib/crispy_tailwind/**/*.{html,py,js}"
-    // pySitePackages + "crispy_tailwind/**/*.{html,py,js}",
-  ],
+  content: content(),
   theme: {
     extend: {
       // 'animation' & 'keyframes' set the dash length and animation for the leaflet curve line
