@@ -1,7 +1,7 @@
 {% extends 'common/base_django.html' %}
 
 {% block body_content %}
-<div class="container mx-auto my-6 max-w-xl">
+<div class="container mx-auto my-6 pb-10 max-w-xl">
     <h1 class="text-red-500 uppercase text-6xl font-thin my-4">Alpine.js Demo</h1>
 
     <!-- x-data - Declare a new Alpine component and its data for a block of HTML -->
@@ -17,7 +17,14 @@
             {title: 'Post Four'},
         ]
     }"
-    >
+    >   
+        <section class="mt-10 mb-4 bg-slate-100 p-10">
+            <h2 class="text-2xl mb-4 text-slate-600">Taggit</h2>
+
+            {% include 'alpine/taggit/index.html' %}
+
+        </section>
+
         <!-- x-on - Listen for browser events on an element -->
         <!-- You can also use @click -->
         <!-- x-bind - Dynamically set HTML attributes on an element -->

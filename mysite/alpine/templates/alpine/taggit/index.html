@@ -1,0 +1,49 @@
+{% comment %} x-init="films = await (await fetch('taggit-films/')).json();" {% endcomment %}
+<div 
+    class="m-5"
+    x-data="{tag: 'ALL', films: [], show: false}"
+>   
+    <button
+        class="text-white px-5 py-3 text-lg bg-sky-800 hover:bg-slate-500"
+        @click="show != show; films = await (await fetch('taggit-films/')).json();"
+    >
+        Show
+    </button>
+    <div class="flex items-center">
+        <div class="grid grid-cols-4 shadow-md hover:shadow-lg focus:shadow-lg" role="group">
+            {% for tag in tags %}
+                {% comment %} $el refers to current DOM node {% endcomment %}
+                <button type="button" 
+                        class="rounded-l inline-block px-6 py-2.5 text-white font-medium text-xs leading-tight uppercase focus:outline-none focus:ring-0 transition duration-150 ease-in-out mr-1"
+                        @click="tag = $el.textContent"
+                        :class="tag === $el.textContent ? 'bg-green-600 hover:bg-green-700 focus:bg-green-700 active:bg-green-800' : 'bg-blue-600 hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-800'"
+                >{{ tag.name }}</button>
+    
+            {% endfor %}
+            <button type="button" 
+                        class="rounded-l inline-block px-6 py-2.5 text-white font-medium text-xs leading-tight uppercase focus:outline-none focus:ring-0 transition duration-150 ease-in-out mr-1"
+                        @click="tag = $el.textContent"
+                        :class="tag === $el.textContent ? 'bg-green-600 hover:bg-green-700 focus:bg-green-700 active:bg-green-800' : 'bg-blue-600 hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-800'"
+                >ALL</button>
+        </div>
+      </div>
+    
+    <br/>
+    
+    {% comment %} {% for film in films %} {% endcomment %}
+    <template x-show="show" x-for="film in films.filter(f => tag === 'ALL' || f.tags.includes(tag))">
+        <a href="#" class="block p-4 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+            {% comment %} <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ film.name }}</h5> {% endcomment %}
+            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white" x-text="film.name"></h5>
+            {% comment %} <p class="font-normal text-gray-700 dark:text-gray-400">Director: {{ film.director }}</p> {% endcomment %}
+            <p class="font-normal text-gray-700 dark:text-gray-400" x-text="film.director"></p>
+            {% comment %} <small>
+                {% for tag in film.tags.all %}
+                    {{ tag }}, 
+                {% endfor %}
+            </small> {% endcomment %}
+            <small x-text="film.tags.join(', ')"></small>
+        </a>
+    </template>
+    {% comment %} {% endfor %} {% endcomment %}
+</div>
