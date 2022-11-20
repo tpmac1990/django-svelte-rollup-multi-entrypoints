@@ -58,6 +58,8 @@ INSTALLED_APPS = [
     'crispy_forms',
     'crispy_tailwind',
     'imagekit',
+    'taggit',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -217,3 +219,6 @@ if DEBUG:
 # Crispy forms
 CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
 CRISPY_TEMPLATE_PACK = "tailwind"
+
+# taggit
+TAGGIT_CASE_INSENSITIVE = True
