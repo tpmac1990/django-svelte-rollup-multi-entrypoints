@@ -58,11 +58,13 @@ INSTALLED_APPS = [
     'crispy_forms',
     'crispy_tailwind',
     'imagekit',
+    'kolo',
     'taggit',
     'rest_framework',
 ]
 
 MIDDLEWARE = [
+    'kolo.middleware.KoloMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
