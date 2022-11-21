@@ -4,7 +4,7 @@
 {% block form_title %}Login{% endblock %}
 
 {% block form_content %}
-
+    <!-- <p>{% url 'login' %}</p> -->
     <form method="POST" action="{% url 'login' %}" autocomplete="off" class="mt-4">
         {% csrf_token %}
 

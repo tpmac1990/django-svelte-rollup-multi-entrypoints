@@ -20,9 +20,9 @@ class RegisterView(FormView):
         return super().form_valid(form)
 
 
-def check_username(request):
-    username = request.POST.get('username')
-    if get_user_model().objects.filter(username=username).exists():
-        return HttpResponse("<div id='username-error' class='error'>This username already exists</div>")
+def check_email(request):
+    email = request.POST.get('email')
+    if get_user_model().objects.filter(email=email).exists():
+        return HttpResponse("<div id='email-error' class='error'>This email already exists</div>")
     else:
-        return HttpResponse("<div id='username-error' class='success'>This username is available</div>")
+        return HttpResponse("<div id='email-error' class='success'>This email is available</div>")

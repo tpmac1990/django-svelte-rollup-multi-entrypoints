@@ -8,10 +8,10 @@
         {% csrf_token %}
 
         <div class="mb-3">
-            <label class="text-left">{{ form.username.label_tag }}</label>
-            {{ form.username.errors }}
-            {% render_field form.username class="w-full" hx-post="/registration/check_username/" hx-swap="outerhtml" hx-trigger="keyup changed" hx-target="#username-error" placeholder="Username" %}
-            <div id="username-error"></div>
+            <label class="text-left">{{ form.email.label_tag }}</label>
+            {{ form.email.errors }}
+            {% render_field form.email class="w-full" hx-post="/registration/check_email/" hx-swap="outerhtml" hx-trigger="keyup changed" hx-target="#email-error" placeholder="Email" %}
+            <div id="email-error"></div>
 
             <label class="text-left">{{ form.password1.label_tag }}</label>
             {{ form.password1.errors }}
