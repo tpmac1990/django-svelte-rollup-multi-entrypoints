@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'kolo',
     'widget_tweaks',
     'django_extensions',
     'debug_toolbar',
@@ -58,13 +59,13 @@ INSTALLED_APPS = [
     'crispy_forms',
     'crispy_tailwind',
     'imagekit',
-    'kolo',
     'taggit',
     'rest_framework',
+    'users',
 ]
 
 MIDDLEWARE = [
-    'kolo.middleware.KoloMiddleware',
+    # 'kolo.middleware.KoloMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -170,8 +171,9 @@ MEDIA_URL = '/static/media/'
 MEDIA_ROOT = '/vol/web/media'
 STATIC_ROOT = '/vol/web/static'
 
-
-AUTH_USER_MODEL = 'registration.User'
+# custom user model
+AUTH_USER_MODEL = 'users.User'
+# AUTH_USER_MODEL = 'registration.User'
 
 LOGIN_URL = 'login'
 
