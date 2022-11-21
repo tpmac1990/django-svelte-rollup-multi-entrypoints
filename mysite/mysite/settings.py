@@ -173,12 +173,11 @@ STATIC_ROOT = '/vol/web/static'
 
 # custom user model
 AUTH_USER_MODEL = 'users.User'
-# AUTH_USER_MODEL = 'registration.User'
 
-LOGIN_URL = 'login'
+LOGIN_URL = '/registration/login'
 
-LOGIN_REDIRECT_URL = 'htmx-lookup/index'
-LOGOUT_REDIRECT_URL = 'htmx-lookup/index'
+LOGIN_REDIRECT_URL = '/htmx-lookup/films'
+LOGOUT_REDIRECT_URL = '/registration/login'
 
 PAGINATE_BY = 3
 
