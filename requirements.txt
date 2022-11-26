@@ -1,3 +1,26 @@
+# I want to use '-r requirements.txt' but it is throwing a recursion error
+# DEVELOPMENT
+# django-debug-toolbar
+django-debug-toolbar==3.6.0
+# django-browser-reload - reloads page on save
+django-browser-reload==1.6.0
+# factory-boy - testing
+factory-boy==3.2.1
+Faker==15.3.2
+# kolo
+kolo==2.2.1
+tomli==2.0.1
+toolz==0.12.0
+ulid-py==1.1.0
+Cerberus==1.3.4
+click==8.1.3
+# debugpy - enables debugging with docker
+debugpy==1.6.3
+# formatting
+black==22.10.0
+
+
+# PRODUCTION
 # django
 Django==4.1 
 asgiref==3.5.2
