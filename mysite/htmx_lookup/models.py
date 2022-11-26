@@ -1,6 +1,6 @@
 from django.db import models
 from django.db.models.functions import Lower
-from registration.models import User
+from users.models import User
 from django_extensions.db.fields import AutoSlugField
 
 
