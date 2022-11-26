@@ -1,8 +1,8 @@
 from django.contrib.auth import get_user_model
-from django.test import TestCase
+from common.test_utils import BaseTest
 
 
-class UsersManagersTests(TestCase):
+class UsersManagersTests(BaseTest):
 
     def test_create_user(self):
         User = get_user_model()
