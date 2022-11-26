@@ -23,12 +23,53 @@ rollup-plugin-output-manifest: `https://github.com/shuizhongyueming/rollup-plugi
 rollup-plugin-styles: `https://www.npmjs.com/package/rollup-plugin-styles`
 
 ### TODO
-1. make image app to show how to deal with media (s3) - delete images, set image quality and size
-2. make elastic search app
-3. setup postgis
-4. minimise css
-5. figure out deployment
-6. testing
+1. make elastic search app
+2. setup postgis
+3. figure out deployment
+5. sort requirements.txt files `https://dev.to/fronkan/requirements-txt-in-your-requirements-txt-4loc`
+8. sitemap
+10. permissions
+11. pip install markdown       # Markdown support for the browsable API.
+12. pip install django-filter  # Filtering support
+
+
+## Tests
+Run a single test:
+`dpy manage.py test registration.tests.test_registration.RegistrationTests.test_register_user__incorrect_email_format`
+`dpy manage.py test app_name.tests.file_name.class_name.test_name`
+
+Run a folder of tests:
+`dpy manage.py test /mysite/registration/tests`
+
+## datadump 
+`/manage.py dumpdata auth.user > user.json`
+## Interact with the database docker container
+`docker exec -it db psql -U devuser devdb`
+container name = db
+username = devuser
+database name = devdb
+
+restore database = `docker exec -i app_db_1 psql -U postgres < app_development.back`
+show data in table = `TABLE <table_name>;`
+
+## kolo setup
+`https://docs.kolo.app/en/latest/index.html`
+`pip install kolo`
+add to installed apps
+install vscode extension `kolo.io`
+add middleware before all other middleware:
+```
+MIDDLEWARE = [
+    'kolo.middleware.KoloMiddleware',
+```
+If manage.py and .kolo directories are not in the root of the directory, then the path to it needs to be added in the directory.
+In this project it sits with in the `mysite` directory. Goto settings, in `search settings` add `@ext:kolo.kolo`, then in `path to kolo directory` add `mysite`.
+It is ready to use.
+
+Current issue:
+`sqlite3.OperationalError`
+follow it here `https://github.com/kolofordjango/kolo/issues/17`
+
 
 ## s3 media file storage
 `https://www.youtube.com/watch?v=nzLMA9WZqMM`
@@ -45,6 +86,8 @@ node:
 npm install @tailwindcss/forms
 
 use: `{{form|crispy}}`
+
+I tried to customise the `input file` field using the `form_filters` tag at `mysite/common/templatetags/form_filters.py` but it removes the adjacent text which is handled by the browser.
 
 I followed this blog: `https://www.accordbox.com/blog/render-django-form-with-tailwind-css-style/`
 Everything seems to be working correctly, but adding the python packages to the tailwind.config.js file doesn't add anything to the bundle.css file. I'm not sure why this is.
@@ -72,6 +115,12 @@ upscale=True, mat_color=None, anchor=Anchor.CENTER
 ResizeToFill(200,180) # will crop, looses dimensions
 SmartResize(200,180) # will crop, looses dimensions
 Resize(200,180) # distorts image
+
+`https://django-imagekit.readthedocs.io/en/latest/`
+
+
+A image component `Upload and view images` exists in the htmx_fragments app which demonstrates the use of the `imagefile` field.
+I have used htmx and a touch of hyperscript. It consists of a form to upload images, a grid display of the images and the ability to display larger images by clicking on a grid image. The large image then works like a carousel allowing the user to click next and previous.
 
 
 ## Python debugging in Docker container
@@ -175,8 +224,10 @@ https://dev.to/lukocastillo/svelte-3-how-to-connect-your-app-with-a-rest-api-axi
 Need to add `import '../../common/src/styles.css';` in the `<script>` tag to only one of the svelte components so changes
 to the css will trigger livereload. I'm still not sure this is the best setup.
 
-
-
+## taggit
+youtube: `https://www.youtube.com/watch?v=213swbH8j_o&t=388s`
+github: `https://github.dev/bugbytes-io/django-taggit-demo`
+docs: `https://django-taggit.readthedocs.io/en/latest/getting_started.html`
 
 # Apps
 
@@ -261,7 +312,7 @@ tut: `https://www.youtube.com/watch?v=r5iWCtfltso`
 mask plugin: `https://alpinejs.dev/plugins/mask`
 
 ### Summary
-A bunch if small elements to demonstrate the various uses of Alpine.js. All code can be managed inside the html file like htmx, but it can also be coupled with other js files. This demonstrates; toggling, transitions, component & global level state management, for loops, conditionals, referencing elements, loading partials with axios. 
+A bunch of small elements to demonstrate the various uses of Alpine.js. All code can be managed inside the html file like htmx, but it can also be coupled with other js files. This demonstrates; toggling, transitions, component & global level state management, for loops, conditionals, referencing elements, loading partials with axios. 
 Uses: Alpine
 demonstrates: events, transitions, state, masks
 
