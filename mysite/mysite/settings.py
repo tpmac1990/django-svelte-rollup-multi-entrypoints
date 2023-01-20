@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'debug_toolbar',
     'django_browser_reload',
+    'channels',
     'django_htmx',
     'other',
     'common',
@@ -62,7 +63,17 @@ INSTALLED_APPS = [
     'taggit',
     'rest_framework',
     'users',
+    'chat',
 ]
+
+ASGI_APPLICATION = 'mysite.asgi.application'
+
+# use redis in production
+CHANNEL_LAYERS = {
+    'default':{
+        'BACKEND':'channels.layers.InMemoryChannelLayer'
+    }
+}
 
 MIDDLEWARE = [
     # 'kolo.middleware.KoloMiddleware',
@@ -74,7 +85,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    "django_browser_reload.middleware.BrowserReloadMiddleware",
+    # "django_browser_reload.middleware.BrowserReloadMiddleware",
     'django_htmx.middleware.HtmxMiddleware',
 ]
 

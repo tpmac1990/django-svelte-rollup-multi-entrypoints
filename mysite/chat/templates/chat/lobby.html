@@ -1,0 +1,49 @@
+{% extends 'common/base_django.html' %}
+
+{% block body_content %}
+    <h1>Lets chat!</h1>
+
+    <form id="form">
+        <input type="text" name="message"/>
+    </form>
+
+    {% comment %} holds the submitted messages {% endcomment %}
+    <div id="messages"></div>
+
+    {% comment %} establish a websocket connection {% endcomment %}
+    <script type="text/javascript">
+        // 'ws' used instead of 'http'
+        let url = `ws://${window.location.host}/ws/socket-server/`
+
+        // set the websocket to a variable
+        const chatSocket = new WebSocket(url)
+
+        // listen to messages on the server. This will fire everytime the server
+        // sends a message from the backend so lets set a function to actually
+        // handle this event.
+        chatSocket.onmessage = function(e){
+            let data = JSON.parse(e.data)
+            console.log('Data:', data)
+
+            if(data.type === 'chat'){
+                // append the latest message in html
+                let messages = document.getElementById('messages')
+                messages.insertAdjacentHTML('beforeend', `<div>
+                                        <p>${data.message}</p>
+                                    </div>`)
+            }
+        }
+
+        // handle form submission and reset it after submission
+        let form = document.getElementById('form')
+        form.addEventListener('submit', (e)=> {
+            e.preventDefault()
+            let message = e.target.message.value 
+            chatSocket.send(JSON.stringify({
+                'message':message
+            }))
+            form.reset()
+        })
+
+    </script>
+{% endblock %}
